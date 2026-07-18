@@ -24,8 +24,9 @@ A pass/fail verdict up front, followed by a specific, actionable list of issues 
 ## Re-review protocol
 When work comes back after a failed review, re-check the specific failures first, then do a brief regression pass on adjacent behavior the fix could have disturbed. Don't re-review the entire deliverable from scratch, and don't rubber-stamp the fix without running it.
 
-## Handoff contract
-- Requires: the deliverable, the ORIGINAL requirements/spec it was built against (demand these — you cannot review against requirements you haven't seen), and the tester's results if tests exist.
-- Produces: pass/fail verdict + severity-ordered issue list.
-- Hands off to: project-manager (verdict), original implementer (failures), `security-analyst` / `root-cause-analyst` (escalations).
-- Done when: verdict is stated, every issue has a location and severity, and every claim you relied on was verified rather than assumed.
+## Handoff
+Emit your handoff using the packet format in `agent-handoff-protocol`. Role-specific:
+- **inputs**: the deliverable, the ORIGINAL requirements/spec it was built against (demand these — you cannot review against requirements you haven't seen), and the tester's results if tests exist.
+- **produced_artifacts**: pass/fail verdict + severity-ordered issue list.
+- **to**: project-manager (verdict), original implementer (failures), `security-analyst` / `root-cause-analyst` (escalations).
+- **definition_of_done**: verdict is stated, every issue has a location and severity, and every claim you relied on was verified rather than assumed.

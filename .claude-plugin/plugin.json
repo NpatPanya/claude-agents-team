@@ -1,7 +1,7 @@
 {
-  "name": "engineering-agent-team",
-  "version": "1.0.0",
-  "description": "A 15-role software engineering subagent team with a project-manager orchestrator: system design, architecture, API design, backend/frontend/devops implementation, QA, testing, security, root-cause analysis, and codebase/document research. Includes standardized handoff contracts and execution flows for features, bug fixes, incidents, refactors, API changes, and security audits.",
+  "name": "agt",
+  "version": "1.1.0",
+  "description": "A 15-role software engineering subagent team organized into six departments (Orchestration, Architecture & Design, Research & Intelligence, Delivery Engineering, Quality & Reliability, Security) with a project-manager orchestrator. Includes two shared skills — a structured agent-handoff protocol and a canonical execution-flows-and-gates reference — covering features, bug fixes, incidents, refactors, API changes, and security audits.",
   "author": {
     "name": "Npat",
     "email":"npatonpym@gmail.com"

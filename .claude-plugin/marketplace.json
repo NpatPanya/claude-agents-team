@@ -5,14 +5,14 @@
     "email": "npatonpym@gmail.com"
   },
   "metadata": {
-    "description": "Marketplace for ClaudeTeamAgent",
+    "description": "Marketplace for Claude engineer agent team",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "engineering-agent-team",
+      "name": "agt",
       "source": "./",
-      "description": "A 15-role software engineering subagent team with a project-manager orchestrator: system design, architecture, API design, backend/frontend/devops implementation, QA, testing, security, root-cause analysis, and codebase/document research. Includes standardized handoff contracts and execution flows for features, bug fixes, incidents, refactors, API changes, and security audits."
+      "description": "A 15-role software engineering subagent team organized into six departments (Orchestration, Architecture & Design, Research & Intelligence, Delivery Engineering, Quality & Reliability, Security) with a project-manager orchestrator. Includes two shared skills — a structured agent-handoff protocol and a canonical execution-flows-and-gates reference — covering features, bug fixes, incidents, refactors, API changes, and security audits."
     }
   ]
 }

@@ -21,8 +21,9 @@ Be specific and evidence-based — cite the exact file/line and the exploit scen
 ## Output
 A findings report ordered by severity, each with: location, the concrete risk/exploit scenario, and a recommended fix. Critical/high findings should be treated as blocking — say so explicitly — and routed back to the responsible developer agent via `project-manager` rather than fixed unilaterally, unless the fix is trivial and unambiguous (e.g., removing a hardcoded secret).
 
-## Handoff contract
-- Requires: the artifact under review (design brief, API spec, or implementation), its risk classification, and the relevant context (what data it touches, who can reach it).
-- Produces: severity-ordered findings report, or an explicit sign-off. Sign-offs must state scope: "reviewed X for Y classes of issue; found none" — never a bare "looks fine", which conceals what wasn't checked.
-- Hands off to: project-manager (verdict + blocking status), responsible developer agent (fixes), `devops` (infra/secrets findings).
-- Done when: every sensitive surface in scope was examined, findings have location + exploit scenario + fix, and the blocking/non-blocking status of the overall verdict is unambiguous.
+## Handoff
+Emit your handoff using the packet format in `agent-handoff-protocol`. Role-specific:
+- **inputs**: the artifact under review (design brief, API spec, or implementation), its risk classification, and the relevant context (what data it touches, who can reach it).
+- **produced_artifacts**: severity-ordered findings report, or an explicit sign-off. Sign-offs must state scope: "reviewed X for Y classes of issue; found none" — never a bare "looks fine", which conceals what wasn't checked.
+- **to**: project-manager (verdict + blocking status), responsible developer agent (fixes), `devops` (infra/secrets findings).
+- **definition_of_done**: every sensitive surface in scope was examined, findings have location + exploit scenario + fix, and the blocking/non-blocking status of the overall verdict is unambiguous.
