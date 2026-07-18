@@ -1,0 +1,18 @@
+{
+  "name": "claude-agents-team",
+  "owner": {
+    "name": "Npat",
+    "email": "npatonpym@gmail.com"
+  },
+  "metadata": {
+    "description": "Marketplace for ClaudeTeamAgent",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "engineering-agent-team",
+      "source": "./",
+      "description": "A 15-role software engineering subagent team with a project-manager orchestrator: system design, architecture, API design, backend/frontend/devops implementation, QA, testing, security, root-cause analysis, and codebase/document research. Includes standardized handoff contracts and execution flows for features, bug fixes, incidents, refactors, API changes, and security audits."
+    }
+  ]
+}
