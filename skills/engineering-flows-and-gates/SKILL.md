@@ -24,14 +24,31 @@ implementer to `tester`.
 
 ## Execution flows
 
-**New feature (standard):**
+**New feature — light (LOW/MEDIUM risk, default):**
+```
+codebase-researcher || document-researcher (only if genuinely needed)
+  → architecture-engineer (writes the spec directly; no separate high-level design pass) || api-design
+  → task-planner
+  → [backend-developer | frontend-developer | devops] (parallel per plan)
+  → tester → qa → security-analyst (MEDIUM only if it touches a sensitive surface)
+  → project-manager (final report)
+```
+This is the default for new-feature work. Skip `system-design` — most features don't need a
+separate high-level-architecture pass before `architecture-engineer` writes the spec.
+
+**New feature — full (HIGH risk, or a genuine architecture decision):**
 ```
 codebase-researcher || document-researcher → system-design
   → architecture-engineer || api-design → task-planner
   → [backend-developer | frontend-developer | devops] (parallel per plan)
-  → tester → qa → security-analyst (HIGH always, MEDIUM if sensitive)
+  → tester → qa → security-analyst (always)
   → project-manager (final report)
 ```
+Use this only when the feature involves a real architecture-level decision — a new system
+boundary, a build-vs-buy call, a cross-cutting tradeoff (sync vs. async, storage model,
+consistency model) — or the task is classified HIGH risk. `system-design` and
+`architecture-engineer` are both opus; don't pay for both unless the decision genuinely needs
+system-design's high-level framing before architecture-engineer can write a sound spec.
 
 **Bug fix:**
 ```
@@ -67,6 +84,18 @@ parallel `backend-developer | frontend-developer | devops` step above), `project
 issue all of that batch's `Task` calls in the same turn rather than round-tripping each one
 serially — Claude Code supports multiple `Task` invocations per assistant turn, and there is no
 dependency forcing them apart.
+
+## Durable artifacts over re-derivation
+
+`codebase-researcher`, `document-researcher`, and `system-design` do read-heavy work whose value
+is easily lost if it only travels forward as prose in a handoff packet — it gets re-summarized (and
+degrades) at every relay, and a later agent may re-trace the same code or re-search the same docs
+rather than trust a paraphrase. All three can write their findings/design brief to a durable file
+(`docs/` or an agreed location, same convention `architecture-engineer` already uses for specs) and
+reference that path in `produced_artifacts`, instead of inlining everything as packet prose. The
+next agent in the chain Reads it once, cold — cheaper than re-deriving it, and it doesn't degrade
+on the way. Use judgment: a two-sentence answer to a narrow question doesn't need a file; a
+multi-file findings report or a design brief that three later stages will reference does.
 
 ## Quality gates
 

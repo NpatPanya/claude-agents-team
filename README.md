@@ -9,7 +9,7 @@ describe a task) and it delegates to the right specialist via the Task tool.
 ### Orchestration
 | Role | Agent name | Model | Effort | Responsibility |
 |---|---|---|---|---|
-| Project Manager | `project-manager` | opus | medium | Orchestrator: scopes, classifies risk, delegates, reconciles conflicts, reports status |
+| Project Manager | `project-manager` | opus | high | Orchestrator: scopes, classifies risk, delegates, reconciles conflicts, reports status |
 | Task Planner | `task-planner` | sonnet | medium | Breaks specs into ordered, risk-tagged, dependency-aware tasks |
 
 ### Architecture & Design
@@ -56,7 +56,9 @@ This plugin is distributed as a `.plugin` file. Install it through Cowork's plug
 Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README, loaded on demand rather than baked into every agent's context:
 
 - **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Loaded on nearly every turn that ends in a handoff.
-- **`engineering-flows-and-gates`** — the execution flow for each kind of task, the risk-classification rubric, the quality gates, and the escalation rules. Loaded mainly by `project-manager`/`task-planner` when sequencing, and by `qa`/`security-analyst`/`root-cause-analyst` when checking which gate or escalation applies.
+- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the model-override table, the quality gates, and the escalation rules. Loaded mainly by `project-manager`/`task-planner` when sequencing, and by `qa`/`security-analyst`/`root-cause-analyst` when checking which gate or escalation applies.
+
+`codebase-researcher`, `document-researcher`, and `system-design` can write their findings/design brief to a durable file instead of only returning it as packet prose — downstream agents Read it once instead of a paraphrase degrading through relays. See "Durable artifacts over re-derivation" in `engineering-flows-and-gates`.
 
 ## How it works
 
