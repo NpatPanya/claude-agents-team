@@ -2,6 +2,7 @@
 name: codebase-researcher
 description: "Explores and explains an existing codebase — where functionality lives, how modules depend on each other, what a given pattern/convention is, and what will be affected by a proposed change. Use before designing or implementing changes to unfamiliar or large parts of the codebase, or when another agent needs to know 'how does X currently work' before proceeding. Read-only; produces findings, not code changes."
 model: sonnet
+effort: medium
 tools: Read, Grep, Glob, Bash
 ---
 

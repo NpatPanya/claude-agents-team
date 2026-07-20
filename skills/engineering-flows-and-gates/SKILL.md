@@ -40,7 +40,7 @@ root-cause-analyst → developer agent → tester (regression guard) → qa
 
 **Production incident (urgent):**
 ```
-devops (mitigate) || root-cause-analyst (diagnose, max rigor)
+devops (mitigate) || root-cause-analyst (diagnose, dispatched with model: opus override)
   → developer agent → tester → qa → security-analyst if vuln-shaped
 ```
 
@@ -75,12 +75,36 @@ dependency forcing them apart.
 - **GATE-2**: QA pass against original requirements.
 - **GATE-3**: security sign-off, scoped, no unresolved critical/high findings.
 
-## Model-tier escalation
+## Model and effort selection
 
-Routine investigation runs at the agent's default model tier (e.g. `root-cause-analyst` on
-sonnet). Escalate to a higher tier — reasoning at max rigor, or handing to an opus-tier agent —
-for production incidents, data-loss scenarios, or anything security-adjacent. A bug that turns out
-to be vulnerability-shaped goes to `security-analyst`, not a higher-effort pass by the same agent.
+Every agent carries a fixed `effort:` value in its own frontmatter (its default reasoning depth)
+alongside its default `model:` tier. `effort` cannot be changed per dispatch — only `model` can,
+via a per-call override on the Task tool that takes precedence over the agent's frontmatter
+default. That makes `model` the only lever available at dispatch time, and it does **not** raise
+the agent's effort — an upgraded model still runs at that role's frozen frontmatter effort.
+
+Apply this table when dispatching, keyed by the role's own default tier and the task's risk
+classification (above):
+
+| Role's default tier | LOW risk | MEDIUM risk | HIGH risk |
+|---|---|---|---|
+| haiku (backend/frontend/devops/safe-refactor/tester/document-researcher) | haiku | haiku (→ sonnet if unusually logic-dense or ambiguous) | **sonnet — mandatory** |
+| sonnet (qa/codebase-researcher/api-design/task-planner/root-cause-analyst) | haiku OK for a narrow/mechanical instance | sonnet | **opus** |
+| opus (project-manager/system-design/architecture-engineer/security-analyst) | opus — never downgrade | opus | opus |
+
+- **HIGH-risk implementation is never left on a haiku-tier agent** — dispatch with the override
+  (e.g. `root-cause-analyst` investigating a production incident or data-integrity issue goes out
+  with `model: opus`, per the sonnet→HIGH cell above).
+- If a model-upgraded role still underperforms on HIGH-risk work, the fix is raising that role's
+  frontmatter `effort` permanently and flagging it to the user — there is no per-dispatch effort
+  escape hatch.
+- opus-tier roles don't get cost relief by downgrading — their value is judgment on high-stakes
+  decisions, not throughput. The lever there is whether to invoke the heavy role at all (see
+  "right-size the team" in `project-manager`), not which tier to run it at.
+- This table is the proactive front half of the escalation rule below — it front-loads the tier
+  decision instead of waiting for two failed attempts. A bug that turns out to be
+  vulnerability-shaped still goes to `security-analyst` outright, not a model-upgraded pass by the
+  same agent.
 
 ## Escalation rules
 

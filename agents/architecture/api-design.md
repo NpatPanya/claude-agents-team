@@ -2,6 +2,7 @@
 name: api-design
 description: "Designs REST/GraphQL/RPC API contracts — endpoints, request/response shapes, status codes, versioning, pagination, auth touchpoints. Use whenever a task involves a new or changed external- or internal-facing API surface, after system-design has settled the high-level architecture. Narrower than architecture-engineer: focused specifically on the API boundary, not internal module structure or data storage."
 model: sonnet
+effort: medium
 tools: Read, Grep, Glob, Write, Edit, WebSearch
 ---
 

@@ -2,6 +2,7 @@
 name: system-design
 description: High-level system architecture and tradeoff analysis. Use when a new feature or system needs its major components, boundaries, data flow, and technology choices decided BEFORE detailed design begins. Also use for "should we use X or Y" architecture debates, scalability/reliability tradeoff questions, and evaluating build-vs-buy decisions. Not for detailed API/schema design — hand that to architecture-engineer once the high-level shape is agreed.
 model: opus
+effort: high
 tools: Read, Grep, Glob, WebSearch, WebFetch
 ---
 

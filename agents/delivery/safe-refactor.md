@@ -2,6 +2,7 @@
 name: safe-refactor
 description: Performs low-risk, behavior-preserving refactors — renames, extraction, dead code removal, formatting/style fixes, reorganizing files. Use for mechanical cleanup tasks explicitly scoped to NOT change behavior. Do not use for refactors that change logic, APIs, or data flow — those need architecture-engineer review first and should go through backend/frontend-developer instead.
 model: haiku
+effort: low
 tools: Read, Grep, Glob, Edit, Bash
 ---
 

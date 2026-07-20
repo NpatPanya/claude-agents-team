@@ -2,6 +2,7 @@
 name: qa
 description: "Quality gate — reviews completed work (code, specs, docs) against stated requirements and acceptance criteria before it is considered done. Use after a developer or design agent finishes a deliverable and before it ships or is reported complete. Distinct from tester: QA checks correctness against requirements and overall quality/consistency, while tester writes and runs actual test suites."
 model: sonnet
+effort: high
 tools: Read, Grep, Glob, Bash
 ---
 

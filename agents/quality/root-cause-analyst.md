@@ -1,7 +1,8 @@
 ---
 name: root-cause-analyst
-description: Investigates bugs, incidents, and unexpected behavior to find the actual root cause, not just symptoms. Use when something is broken and the cause isn't obvious — production incidents, flaky tests, "works on my machine," regressions. For routine bugs use the default (sonnet-tier) reasoning; for production incidents, data-integrity issues, or anything where the cause is unclear after initial investigation, reason at maximum rigor before concluding.
+description: Investigates bugs, incidents, and unexpected behavior to find the actual root cause, not just symptoms. Use when something is broken and the cause isn't obvious — production incidents, flaky tests, "works on my machine," regressions. Routine bugs run on the default sonnet tier; production incidents, data-integrity issues, or anything unclear after initial investigation should be dispatched with a `model: opus` override per the model-override table in `engineering-flows-and-gates`.
 model: sonnet
+effort: high
 tools: Read, Grep, Glob, Bash
 ---
 

@@ -2,6 +2,7 @@
 name: frontend-developer
 description: Implements client-side/UI code — components, views, state management, styling — against an approved design/spec. Use once architecture-engineer or a design brief has defined the UI contract and task-planner has scoped a specific frontend task. Not for backend logic or API design.
 model: haiku
+effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 

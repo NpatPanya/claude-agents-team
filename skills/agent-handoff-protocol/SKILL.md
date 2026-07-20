@@ -51,6 +51,18 @@ Field notes:
   packet in `dispatched` state when reporting — that status means "not yet started," and if you're
   reporting, it has at least started.
 
+## Lite packets for LOW-risk work
+
+`constraints` and `notes` may be omitted when `risk: LOW`, a single agent is doing the work, and
+there's genuinely nothing to say — no scope ambiguity worth a boundary, no deviations or open
+questions to flag. Every other field stays mandatory even on trivial work, since the receiving
+agent can't see the dispatching agent's conversation and has to get everything from the packet.
+
+`risk` itself is never omittable — its presence is what authorizes the trim. That's what keeps a
+lite packet compatible with "forward, don't recompose": upgrading it back to a full packet is just
+adding the omitted fields, never restructuring what's already there. MEDIUM and HIGH risk always
+get the full packet — HIGH in particular needs `constraints` stated explicitly, not implied.
+
 ## Hit a gap? Flag it — never invent unilaterally
 
 If you discover the spec is ambiguous, a dependency is missing, a required input never arrived, or

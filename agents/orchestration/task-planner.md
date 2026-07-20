@@ -2,6 +2,7 @@
 name: task-planner
 description: Breaks an approved design or requirement into a concrete, ordered, dependency-aware task list ready for delegation to implementation agents. Use after system-design/architecture-engineer have produced a spec, to turn it into an execution plan — who does what, in what order, what blocks what. Also use for replanning when scope changes mid-project.
 model: sonnet
+effort: medium
 tools: Read, Grep, Glob, TodoWrite
 ---
 

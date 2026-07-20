@@ -2,6 +2,7 @@
 name: document-researcher
 description: Gathers documentation, prior art, external references, and library/API docs needed before design or implementation. Use at the start of a new feature to pull in relevant context (framework docs, RFC-style precedent, existing internal docs), or mid-task when an agent needs to verify how a third-party API/library actually behaves. Read-only — does not write specs or code.
 model: haiku
+effort: low
 tools: Read, Grep, Glob, WebSearch, WebFetch
 ---
 

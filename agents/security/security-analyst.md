@@ -2,6 +2,7 @@
 name: security-analyst
 description: Threat modeling and vulnerability review — authentication, authorization, injection risks, secrets handling, data exposure, dependency vulnerabilities. Use before shipping anything that touches auth, user data, external input, payments, or third-party integrations, and whenever another agent (devops, root-cause-analyst) flags a possible security issue. Highest-rigor role on the team; treat findings as blocking until resolved.
 model: opus
+effort: high
 tools: Read, Grep, Glob, Bash, WebSearch
 ---
 

@@ -7,43 +7,43 @@ describe a task) and it delegates to the right specialist via the Task tool.
 ## Roster
 
 ### Orchestration
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| Project Manager | `project-manager` | opus | Orchestrator: scopes, classifies risk, delegates, reconciles conflicts, reports status |
-| Task Planner | `task-planner` | sonnet | Breaks specs into ordered, risk-tagged, dependency-aware tasks |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| Project Manager | `project-manager` | opus | medium | Orchestrator: scopes, classifies risk, delegates, reconciles conflicts, reports status |
+| Task Planner | `task-planner` | sonnet | medium | Breaks specs into ordered, risk-tagged, dependency-aware tasks |
 
 ### Architecture & Design
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| System Design | `system-design` | opus | High-level architecture, component boundaries, tradeoffs |
-| Architecture Engineer | `architecture-engineer` | opus | Detailed specs: schemas, interfaces, module boundaries, migration paths |
-| API Design | `api-design` | sonnet | API contracts: endpoints, schemas, versioning, breaking-change classification |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| System Design | `system-design` | opus | high | High-level architecture, component boundaries, tradeoffs |
+| Architecture Engineer | `architecture-engineer` | opus | high | Detailed specs: schemas, interfaces, module boundaries, migration paths |
+| API Design | `api-design` | sonnet | medium | API contracts: endpoints, schemas, versioning, breaking-change classification |
 
 ### Research & Intelligence
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| Codebase Researcher | `codebase-researcher` | sonnet | Traces how existing code works, assesses change blast radius |
-| Document Researcher | `document-researcher` | haiku | Gathers external docs, library references, prior art |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| Codebase Researcher | `codebase-researcher` | sonnet | medium | Traces how existing code works, assesses change blast radius |
+| Document Researcher | `document-researcher` | haiku | low | Gathers external docs, library references, prior art |
 
 ### Delivery Engineering
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| Backend Developer | `backend-developer` | haiku | Server/API/data-layer implementation |
-| Frontend Developer | `frontend-developer` | haiku | UI/client implementation |
-| DevOps | `devops` | haiku | CI/CD, infra, deployment, rollback plans |
-| Safe Refactor | `safe-refactor` | haiku | Behavior-preserving mechanical refactors only |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| Backend Developer | `backend-developer` | haiku | medium | Server/API/data-layer implementation |
+| Frontend Developer | `frontend-developer` | haiku | medium | UI/client implementation |
+| DevOps | `devops` | haiku | medium | CI/CD, infra, deployment, rollback plans |
+| Safe Refactor | `safe-refactor` | haiku | low | Behavior-preserving mechanical refactors only |
 
 ### Quality & Reliability
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| QA | `qa` | sonnet | Reviews deliverables against original requirements, pass/fail gate |
-| Tester | `tester` | haiku | Writes and runs tests, owns the regression suite |
-| Root Cause Analyst | `root-cause-analyst` | sonnet (escalates to opus) | Bug/incident investigation with regression-guard recommendations |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| QA | `qa` | sonnet | high | Reviews deliverables against original requirements, pass/fail gate |
+| Tester | `tester` | haiku | medium | Writes and runs tests, owns the regression suite |
+| Root Cause Analyst | `root-cause-analyst` | sonnet (dispatched with `model: opus` override for incidents) | high | Bug/incident investigation with regression-guard recommendations |
 
 ### Security
-| Role | Agent name | Model | Responsibility |
-|---|---|---|---|
-| Security Analyst | `security-analyst` | opus | Threat modeling, vulnerability review, blocking sign-off |
+| Role | Agent name | Model | Effort | Responsibility |
+|---|---|---|---|---|
+| Security Analyst | `security-analyst` | opus | high | Threat modeling, vulnerability review, blocking sign-off |
 
 **Model note:** the original request specified "fable-5" for Project Manager and "opus 4.8" for several roles. Neither is a recognized Claude Code/Cowork model alias, so both were mapped to `opus`, the highest-capability tier available. If your environment has a custom alias configured for those exact names, edit the `model:` field in the relevant agent file.
 
@@ -98,3 +98,4 @@ whichever specialist the situation calls for.
 - `codebase-researcher` vs. `document-researcher`: former traces your own codebase, latter pulls external docs.
 - `api-design` vs. `architecture-engineer`: former owns the request/response contract at the API boundary; latter owns internal module structure and data storage.
 - Department subdirectories under `agents/` are organizational only — moving a file between departments never changes its `name:` frontmatter, so it never breaks how the agent is invoked or `@`-mentioned.
+- `model:` can be overridden per dispatch (the Task tool's per-call `model` param takes precedence over the frontmatter default) — `project-manager`/`task-planner` use this per the model-override table in `engineering-flows-and-gates` to upgrade a task's model tier for higher risk. `effort:` cannot be overridden per dispatch; it's a fixed default you tune once in the agent's own file.

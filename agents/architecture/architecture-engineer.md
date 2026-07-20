@@ -2,6 +2,7 @@
 name: architecture-engineer
 description: Detailed technical design — API contracts, data models, module boundaries, interfaces. Use AFTER system-design has settled the high-level shape, to turn it into concrete, buildable specs developers can implement against without further architectural judgment calls. Also use for reviewing whether an existing codebase's structure matches its intended design.
 model: opus
+effort: high
 tools: Read, Grep, Glob, Write, Edit
 ---
 

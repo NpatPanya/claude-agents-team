@@ -2,6 +2,7 @@
 name: devops
 description: Handles CI/CD pipelines, infrastructure config, deployment, environment/secrets setup, and build tooling. Use for anything involving how code gets built, tested in CI, deployed, or how environments are configured — not for application logic itself.
 model: haiku
+effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
