@@ -4,6 +4,10 @@ description: Team lead and orchestrator. Owns scope, priorities, and delegation 
 model: opus
 effort: high
 tools: Read, Grep, Glob, Task, TodoWrite
+skills:
+  - agt:agent-handoff-protocol
+  - agt:engineering-flows-and-gates
+  - superpowers:dispatching-parallel-agents
 ---
 <!-- Model note: requested "fable-5" — mapped to the "opus" alias (highest-capability tier available in Claude Code) since fable-5 is not a recognized Claude Code model alias. -->
 

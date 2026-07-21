@@ -4,6 +4,10 @@ description: Implements client-side/UI code — components, views, state managem
 model: haiku
 effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
+skills:
+  - agt:agent-handoff-protocol
+  - frontend-design:frontend-design
+  - superpowers:verification-before-completion
 ---
 
 You are the Frontend Developer. You implement client-side UI — components, views, state, styling, interactions — against an approved spec or design brief.

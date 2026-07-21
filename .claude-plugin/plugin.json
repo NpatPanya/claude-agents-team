@@ -1,6 +1,6 @@
 {
   "name": "agt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A 15-role software engineering subagent team organized into six departments (Orchestration, Architecture & Design, Research & Intelligence, Delivery Engineering, Quality & Reliability, Security) with a project-manager orchestrator. Includes two shared skills — a structured agent-handoff protocol and a canonical execution-flows-and-gates reference — covering features, bug fixes, incidents, refactors, API changes, and security audits.",
   "author": {
     "name": "Npat",

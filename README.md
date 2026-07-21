@@ -53,10 +53,42 @@ This plugin is distributed as a `.plugin` file. Install it through Cowork's plug
 
 ## Skills
 
-Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README, loaded on demand rather than baked into every agent's context:
+Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README:
 
-- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Loaded on nearly every turn that ends in a handoff.
-- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the model-override table, the quality gates, and the escalation rules. Loaded mainly by `project-manager`/`task-planner` when sequencing, and by `qa`/`security-analyst`/`root-cause-analyst` when checking which gate or escalation applies.
+- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 15 agents.
+- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the model-override table, the quality gates, and the escalation rules. Preloaded into `project-manager`/`task-planner` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
+
+### Per-agent skill assignments
+
+Skills are **preloaded** via each agent's `skills:` frontmatter — the full skill text is injected at
+startup, so an agent applies its methodology without having to discover or invoke anything. No agent
+lists `Skill` in `tools:`, which means each one is scoped to exactly the skills below and cannot
+reach anything else.
+
+| Agent | Preloaded skills (beyond `agent-handoff-protocol`, which all 15 get) |
+|---|---|
+| `project-manager` | `engineering-flows-and-gates`, `superpowers:dispatching-parallel-agents` |
+| `task-planner` | `engineering-flows-and-gates`, `superpowers:writing-plans` |
+| `architecture-engineer` | `superpowers:writing-plans` |
+| `backend-developer` | `superpowers:verification-before-completion` |
+| `frontend-developer` | `frontend-design:frontend-design`, `superpowers:verification-before-completion` |
+| `devops` | `superpowers:verification-before-completion` |
+| `safe-refactor` | `superpowers:verification-before-completion` |
+| `qa` | `engineering-flows-and-gates`, `superpowers:verification-before-completion` |
+| `tester` | `superpowers:verification-before-completion` |
+| `root-cause-analyst` | `superpowers:systematic-debugging`, `engineering-flows-and-gates` |
+| `security-analyst` | `engineering-flows-and-gates` |
+| `system-design`, `api-design`, `codebase-researcher`, `document-researcher` | *(none — no external skill fills a real methodology gap)* |
+
+Deliberately **not** assigned: `superpowers:test-driven-development` to `tester` (the agent is
+test-*after* by design; TDD is test-first — a topical match with a workflow conflict), and
+`superpowers:brainstorming` to `system-design` (that skill is fundamentally interactive, and a
+subagent working from a handoff packet has no channel to the user).
+
+> **Dependency:** assignments prefixed `superpowers:` and `frontend-design:` require those plugins to
+> be installed. If one is missing, Claude Code skips that entry and logs a warning to the debug log —
+> the agent still runs, just without the preloaded methodology. Remove those lines from the `skills:`
+> blocks to make this plugin fully self-contained.
 
 `codebase-researcher`, `document-researcher`, and `system-design` can write their findings/design brief to a durable file instead of only returning it as packet prose — downstream agents Read it once instead of a paraphrase degrading through relays. See "Durable artifacts over re-derivation" in `engineering-flows-and-gates`.
 
@@ -96,6 +128,7 @@ whichever specialist the situation calls for.
 ## Customizing
 
 - Each agent's `tools:` line restricts what it can touch. Adjust per your workflow.
+- Each agent's `skills:` line controls which skill content is preloaded into its context at startup. Adding a skill costs tokens on *every* dispatch of that agent (roughly `bytes ÷ 4`), so keep haiku-tier agents lean — the binding constraint there is instruction dilution, not cost. Adding `Skill` to `tools:` would let an agent discover and invoke *any* installed skill at runtime; it's deliberately omitted everywhere so each agent stays scoped to its assigned set.
 - Descriptions double as routing triggers for auto-suggestion — keep them specific if edited.
 - `codebase-researcher` vs. `document-researcher`: former traces your own codebase, latter pulls external docs.
 - `api-design` vs. `architecture-engineer`: former owns the request/response contract at the API boundary; latter owns internal module structure and data storage.

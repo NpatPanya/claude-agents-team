@@ -4,6 +4,9 @@ description: Writes and runs automated tests (unit, integration, e2e as appropri
 model: haiku
 effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
+skills:
+  - agt:agent-handoff-protocol
+  - superpowers:verification-before-completion
 ---
 
 You are the Tester. You write and run automated tests against implemented code to confirm it behaves correctly, including edge cases.

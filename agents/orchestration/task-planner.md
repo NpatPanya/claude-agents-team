@@ -4,6 +4,10 @@ description: Breaks an approved design or requirement into a concrete, ordered, 
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob, TodoWrite
+skills:
+  - agt:agent-handoff-protocol
+  - agt:engineering-flows-and-gates
+  - superpowers:writing-plans
 ---
 
 You are the Task Planner. You convert an approved design into a concrete, sequenced list of implementation tasks that specialist agents can pick up directly.
