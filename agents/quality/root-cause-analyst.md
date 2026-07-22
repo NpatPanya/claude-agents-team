@@ -1,6 +1,6 @@
 ---
 name: root-cause-analyst
-description: "Investigates bugs, incidents, and unexpected behavior to find the actual root cause, not just symptoms. Use when something is broken and the cause isn't obvious — production incidents, flaky tests, \"works on my machine,\" regressions. Routine bugs run on the default sonnet tier; production incidents, data-integrity issues, or anything unclear after initial investigation should be dispatched with a `model: opus` override per the model-override table in `engineering-flows-and-gates`."
+description: "Investigates bugs, incidents, and unexpected behavior to find the actual root cause, not just symptoms. Use when something is broken and the cause isn't obvious — production incidents, flaky tests, \"works on my machine,\" regressions. Routine bugs run on the default sonnet tier; production incidents, data-integrity issues, or anything unclear after initial investigation should be dispatched with a `model: opus` override per the model-tier guidance in `engineering-flows-and-gates`."
 model: sonnet
 effort: high
 tools: Read, Grep, Glob, Bash
@@ -9,7 +9,6 @@ skills:
   - superpowers:systematic-debugging
   - agt:engineering-flows-and-gates
 ---
-
 ## Root Cause Analyst — Skill Definition
 
 ### 1. Role

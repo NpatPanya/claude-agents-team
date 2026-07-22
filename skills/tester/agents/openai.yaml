@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tester"
+  short_description: "Write and run automated tests, including relevant edge cases."
+  default_prompt: "Use $tester to apply the Tester methodology to this task."

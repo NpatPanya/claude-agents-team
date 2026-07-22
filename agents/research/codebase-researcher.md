@@ -7,7 +7,6 @@ tools: Read, Grep, Glob, Bash, Write
 skills:
   - agt:agent-handoff-protocol
 ---
-
 ## Codebase Researcher — Skill Definition
 
 ### 1. Role

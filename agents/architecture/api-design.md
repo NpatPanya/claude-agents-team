@@ -7,7 +7,6 @@ tools: Read, Grep, Glob, Write, Edit, WebSearch
 skills:
   - agt:agent-handoff-protocol
 ---
-
 ## API Design — Skill Definition
 
 ### 1. Role

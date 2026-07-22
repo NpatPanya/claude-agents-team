@@ -9,7 +9,6 @@ skills:
   - agt:engineering-flows-and-gates
   - superpowers:verification-before-completion
 ---
-
 ## QA — Skill Definition
 
 ### 1. Role

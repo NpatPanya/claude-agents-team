@@ -9,7 +9,6 @@ skills:
   - agt:engineering-flows-and-gates
   - superpowers:writing-plans
 ---
-
 ## Task Planner — Skill Definition
 
 ### 1. Role

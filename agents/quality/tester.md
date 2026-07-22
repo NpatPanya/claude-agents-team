@@ -8,7 +8,6 @@ skills:
   - agt:agent-handoff-protocol
   - superpowers:verification-before-completion
 ---
-
 ## Tester — Skill Definition
 
 ### 1. Role

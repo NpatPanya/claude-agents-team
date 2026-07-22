@@ -8,7 +8,6 @@ skills:
   - agt:agent-handoff-protocol
   - agt:engineering-flows-and-gates
 ---
-
 ## Security Analyst — Skill Definition
 
 ### 1. Role

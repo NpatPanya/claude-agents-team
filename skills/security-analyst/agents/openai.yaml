@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Analyst"
+  short_description: "Threat-model and review authentication, input, secrets, and data exposure."
+  default_prompt: "Use $security-analyst to apply the Security Analyst methodology to this task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Researcher"
+  short_description: "Trace existing code and assess the blast radius of changes."
+  default_prompt: "Use $codebase-researcher to apply the Codebase Researcher methodology to this task."

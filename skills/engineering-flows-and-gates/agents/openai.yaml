@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Flows and Gates"
+  short_description: "Classify work, sequence agents, and enforce quality gates."
+  default_prompt: "Use $engineering-flows-and-gates to apply the Engineering Flows and Gates methodology to this task."

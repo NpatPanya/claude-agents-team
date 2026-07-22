@@ -8,7 +8,6 @@ skills:
   - agt:agent-handoff-protocol
   - superpowers:verification-before-completion
 ---
-
 ## Backend Developer — Skill Definition
 
 ### 1. Role

@@ -1,0 +1,4 @@
+interface:
+  display_name: "DevOps"
+  short_description: "Handle CI/CD, infrastructure, deployment, and environment configuration."
+  default_prompt: "Use $devops to apply the DevOps methodology to this task."

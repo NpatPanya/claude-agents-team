@@ -1,0 +1,4 @@
+interface:
+  display_name: "System Design"
+  short_description: "Define high-level architecture, boundaries, data flow, and tradeoffs."
+  default_prompt: "Use $system-design to apply the System Design methodology to this task."

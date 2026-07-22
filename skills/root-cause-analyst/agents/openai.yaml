@@ -1,0 +1,4 @@
+interface:
+  display_name: "Root Cause Analyst"
+  short_description: "Investigate bugs and incidents to identify their actual root cause."
+  default_prompt: "Use $root-cause-analyst to apply the Root Cause Analyst methodology to this task."

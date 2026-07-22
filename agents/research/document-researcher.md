@@ -7,7 +7,6 @@ tools: Read, Grep, Glob, Write, WebSearch, WebFetch
 skills:
   - agt:agent-handoff-protocol
 ---
-
 ## Document Researcher — Skill Definition
 
 ### 1. Role

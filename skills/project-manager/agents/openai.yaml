@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Manager"
+  short_description: "Scope, classify, delegate, and reconcile multi-agent engineering work."
+  default_prompt: "Use $project-manager to apply the Project Manager methodology to this task."

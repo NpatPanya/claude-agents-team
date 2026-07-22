@@ -1,7 +1,6 @@
 ---
 name: devops
 description: Standalone reference for the DevOps role — CI/CD pipelines, infrastructure config, deployment, environment/secrets setup, and build tooling. Load this to operate as devops outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## DevOps — Skill Definition

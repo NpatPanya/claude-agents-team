@@ -56,7 +56,7 @@ This plugin is distributed as a `.plugin` file. Install it through Cowork's plug
 Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README:
 
 - **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 15 agents.
-- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the model-override table, the quality gates, and the escalation rules. Preloaded into `project-manager`/`task-planner` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
+- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the delegation and model-tier policy, the quality gates, and the escalation rules. Preloaded into `project-manager`/`task-planner` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
 
 ### Per-agent skill assignments
 
@@ -133,4 +133,28 @@ whichever specialist the situation calls for.
 - `codebase-researcher` vs. `document-researcher`: former traces your own codebase, latter pulls external docs.
 - `api-design` vs. `architecture-engineer`: former owns the request/response contract at the API boundary; latter owns internal module structure and data storage.
 - Department subdirectories under `agents/` are organizational only — moving a file between departments never changes its `name:` frontmatter, so it never breaks how the agent is invoked or `@`-mentioned.
-- `model:` can be overridden per dispatch (the Task tool's per-call `model` param takes precedence over the frontmatter default) — `project-manager`/`task-planner` use this per the model-override table in `engineering-flows-and-gates` to upgrade a task's model tier for higher risk. `effort:` cannot be overridden per dispatch; it's a fixed default you tune once in the agent's own file.
+- `model:` can be overridden per dispatch (the Task tool's per-call `model` param takes precedence over the frontmatter default) — `project-manager`/`task-planner` use this per the model-tier guidance in `engineering-flows-and-gates` to upgrade a task's model tier for higher risk. `effort:` cannot be overridden per dispatch; it's a fixed default you tune once in the agent's own file.
+
+## Workflow reliability policy
+
+Before delegation, classify each task deterministically as LOW, MEDIUM, or HIGH from its impact
+signals, and record reasoning effort separately. LOW work stays with the main agent; MEDIUM work
+may use one focused specialist; HIGH work requires the full threat-model, design, implementation,
+QA, security, and human-review gates. The complete policy and HIGH gate order live in
+skills/engineering-flows-and-gates/SKILL.md.
+
+skills/<role>/SKILL.md is the canonical source for every role definition. Agent frontmatter stays
+agent-specific, while agent bodies are generated from the matching canonical skill. Check or
+regenerate synchronization with:
+
+    python scripts/sync_role_agents.py --check
+    python scripts/sync_role_agents.py
+
+Validate the repository and run the tests with:
+
+    python -m pip install -r requirements-dev.txt
+    python -m unittest discover -s tests -v
+    python scripts/validate_repo.py
+
+Release versions are sourced from .claude-plugin/plugin.json; marketplace metadata must match that
+version. Skill frontmatter does not carry a version.

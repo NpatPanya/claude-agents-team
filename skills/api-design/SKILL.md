@@ -1,7 +1,6 @@
 ---
 name: api-design
 description: Standalone reference for the API Design role — defining the contract at the boundary between clients and a service (endpoints, request/response shapes, status/error codes, versioning, pagination). Load this to operate as api-design outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## API Design — Skill Definition

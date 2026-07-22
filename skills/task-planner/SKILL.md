@@ -1,7 +1,6 @@
 ---
 name: task-planner
 description: Standalone reference for the Task Planner role — breaking an approved design or requirement into a concrete, ordered, dependency-aware task list ready for delegation. Load this to operate as task-planner outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Task Planner — Skill Definition

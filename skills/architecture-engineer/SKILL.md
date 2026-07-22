@@ -1,7 +1,6 @@
 ---
 name: architecture-engineer
 description: Standalone reference for the Architecture Engineer role — turning an approved high-level design into concrete, implementable specs (API contracts, data models, module boundaries, interfaces). Load this to operate as architecture-engineer outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Architecture Engineer — Skill Definition

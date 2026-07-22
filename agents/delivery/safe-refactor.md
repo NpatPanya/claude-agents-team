@@ -8,7 +8,6 @@ skills:
   - agt:agent-handoff-protocol
   - superpowers:verification-before-completion
 ---
-
 ## Safe Refactor — Skill Definition
 
 ### 1. Role

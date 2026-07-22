@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Handoff Protocol"
+  short_description: "Structure agent dispatches, completions, blocks, and escalations."
+  default_prompt: "Use $agent-handoff-protocol to apply the Agent Handoff Protocol methodology to this task."

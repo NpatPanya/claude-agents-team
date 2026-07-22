@@ -1,7 +1,6 @@
 ---
 name: system-design
 description: Standalone reference for the System Design role — high-level system architecture and tradeoff analysis, defining major components, boundaries, data flow, and technology choices before detailed design begins. Load this to operate as system-design outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## System Design — Skill Definition

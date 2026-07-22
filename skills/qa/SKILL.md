@@ -1,7 +1,6 @@
 ---
 name: qa
 description: Standalone reference for the QA role — the last check before work is called done, reviewing deliverables against stated requirements and flagging gaps, inconsistencies, or likely downstream breakage. Load this to operate as qa outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## QA — Skill Definition

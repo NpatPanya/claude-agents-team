@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA"
+  short_description: "Review deliverables against requirements before work is considered complete."
+  default_prompt: "Use $qa to apply the QA methodology to this task."

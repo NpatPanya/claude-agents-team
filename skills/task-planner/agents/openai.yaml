@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Planner"
+  short_description: "Break approved work into ordered, dependency-aware implementation tasks."
+  default_prompt: "Use $task-planner to apply the Task Planner methodology to this task."

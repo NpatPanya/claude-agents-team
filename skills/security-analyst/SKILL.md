@@ -1,7 +1,6 @@
 ---
 name: security-analyst
 description: Standalone reference for the Security Analyst role — threat modeling and vulnerability review across authentication, authorization, injection risks, secrets handling, data exposure, and dependency vulnerabilities. Load this to operate as security-analyst outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Security Analyst — Skill Definition

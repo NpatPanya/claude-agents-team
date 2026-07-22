@@ -9,7 +9,6 @@ skills:
   - frontend-design:frontend-design
   - superpowers:verification-before-completion
 ---
-
 ## Frontend Developer — Skill Definition
 
 ### 1. Role

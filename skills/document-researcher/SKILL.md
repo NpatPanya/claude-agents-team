@@ -1,7 +1,6 @@
 ---
 name: document-researcher
 description: Standalone reference for the Document Researcher role — gathering documentation, prior art, and external/library references other agents need before designing or building. Load this to operate as document-researcher outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Document Researcher — Skill Definition

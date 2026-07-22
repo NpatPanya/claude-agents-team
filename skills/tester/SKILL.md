@@ -1,7 +1,6 @@
 ---
 name: tester
 description: Standalone reference for the Tester role — writing and running automated tests against implemented code to confirm it behaves correctly, including edge cases. Load this to operate as tester outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Tester — Skill Definition

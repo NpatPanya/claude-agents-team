@@ -1,146 +1,114 @@
 ---
 name: engineering-flows-and-gates
-description: This skill should be used when sequencing multi-agent work (deciding which agent runs next and in what order), classifying a task's risk tier, deciding which quality gate applies before work can be considered done, or deciding where to escalate when something goes wrong. Primarily used by project-manager and task-planner when planning/dispatching, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied or where to route a finding.
-version: 1.0.0
+description: This skill should be used when sequencing multi-agent work, classifying a task's risk tier and reasoning effort, selecting quality gates, or deciding where to escalate when work goes wrong. Primarily used by project-manager and task-planner, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied.
 ---
 
 # Engineering flows and gates
 
-The canonical reference for how work moves through this team: risk classification, the execution
-flow for each kind of task, the quality gates that must pass before something is "done," and where
-to escalate when it isn't going well. `project-manager` and `task-planner` should treat this as the
-default sequencing unless the specific task clearly warrants a different order — deviate when it
-makes sense, but know what you're deviating from.
+This is the canonical workflow policy. project-manager classifies every task before
+delegating it, then chooses the smallest team that can satisfy the required gates.
 
-## Risk classification (tag every task before delegating)
+## Deterministic task classification
 
-- **LOW** — docs, internal tooling, refactors with existing test coverage.
-- **MEDIUM** — feature code, schema changes.
-- **HIGH** — auth, payments, data migration, production infra, external API surface.
+Classify impact risk and reasoning effort separately; a low-impact task can still require
+deep reasoning, and a high-impact task can be mechanically simple.
 
-HIGH always gets `security-analyst` review and never skips `qa`. MEDIUM skips security review only
-if it demonstrably touches none of the sensitive surfaces above. LOW may go straight from
-implementer to `tester`.
+Risk is determined by the highest matching explicit signal:
+
+- HIGH: authentication or authorization, payments, PII or personal data, secrets or
+  credentials, production infrastructure, data/database migration, public or external API,
+  breaking API, security work, destructive data changes, or an incident.
+- MEDIUM: feature code, schema/database changes that are not migrations, APIs that are
+  neither public nor breaking, integrations, background jobs, business logic, bugs, dependency
+  changes, or configuration changes.
+- LOW: documentation, internal tooling, formatting, and explicitly behavior-preserving
+  refactors with existing coverage.
+
+Evaluate HIGH before MEDIUM. If no signal matches, classify as LOW only when the scope is
+explicitly narrow and reversible; otherwise classify as MEDIUM and ask project-manager to
+bound the work. Record the matching signal in the handoff packet.
+
+Reasoning effort is a separate LOW/MEDIUM/HIGH label. Raise it for ambiguity, cross-cutting
+changes, distributed/concurrent behavior, migrations, architecture tradeoffs, multiple services,
+or unknown behavior. Do not use effort to waive a risk gate, and do not use risk as a proxy for
+how difficult the reasoning is.
+
+## Delegation policy
+
+LOW means the main agent works alone: perform minimal focused inspection, make the smallest
+safe change, and run one relevant verification. Do not dispatch a sub-agent.
+
+MEDIUM permits one focused sub-agent only when its checkable output reduces total effort. The
+main agent remains accountable. Parallelize only independent, read-only checks; never parallelize
+dependent edits. Stop once the focused output is consumed and the verification is green.
+
+HIGH requires the complete gated flow, targeted specialists, final QA/security review, and a
+recorded human review. The number of specialists is driven by the attack surface and dependencies,
+not by a default team size.
 
 ## Execution flows
 
-**New feature — light (LOW/MEDIUM risk, default):**
-```
-codebase-researcher || document-researcher (only if genuinely needed)
-  → architecture-engineer (writes the spec directly; no separate high-level design pass) || api-design
-  → task-planner
-  → [backend-developer | frontend-developer | devops] (parallel per plan)
-  → tester → qa → security-analyst (MEDIUM only if it touches a sensitive surface)
-  → project-manager (final report)
-```
-This is the default for new-feature work. Skip `system-design` — most features don't need a
-separate high-level-architecture pass before `architecture-engineer` writes the spec.
+HIGH-risk work (required order):
 
-**New feature — full (HIGH risk, or a genuine architecture decision):**
-```
-codebase-researcher || document-researcher → system-design
-  → architecture-engineer || api-design → task-planner
-  → [backend-developer | frontend-developer | devops] (parallel per plan)
-  → tester → qa → security-analyst (always)
-  → project-manager (final report)
-```
-Use this only when the feature involves a real architecture-level decision — a new system
-boundary, a build-vs-buy call, a cross-cutting tradeoff (sync vs. async, storage model,
-consistency model) — or the task is classified HIGH risk. `system-design` and
-`architecture-engineer` are both opus; don't pay for both unless the decision genuinely needs
-system-design's high-level framing before architecture-engineer can write a sound spec.
+~~~text
+research -> security-analyst (GATE-0 threat model) -> system-design
+  -> architecture-engineer/api-design -> task-planner -> implementation
+  -> tester -> QA -> security-analyst (GATE-3)
+~~~
 
-**Bug fix:**
-```
-root-cause-analyst → developer agent → tester (regression guard) → qa
-```
+GATE-0 must pass before specification or design begins. The implementation stage may use targeted
+backend, frontend, devops, or other specialists, but only after the plan is approved. GATE-3 is a
+scoped security sign-off after QA and cannot be replaced by a generic test result.
 
-**Production incident (urgent):**
-```
-devops (mitigate) || root-cause-analyst (diagnose, dispatched with model: opus override)
-  → developer agent → tester → qa → security-analyst if vuln-shaped
-```
+LOW/MEDIUM new feature:
 
-**Refactor/cleanup (LOW risk only):**
-```
-codebase-researcher (blast radius, if uncertain) → safe-refactor
-  → tester (if weak coverage) → qa (light pass)
-```
+~~~text
+focused research (only if needed) -> architecture-engineer/api-design -> task-planner
+  -> implementation -> tester -> QA -> project-manager
+~~~
 
-**API change (existing surface):**
-```
-codebase-researcher → api-design (breaking-change classification)
-  → backend-developer || frontend-developer → tester → qa → security-analyst if access model changes
-```
+Add security review for MEDIUM work if it touches a sensitive surface. A genuine architecture
+decision upgrades the task to HIGH.
 
-**Security audit:**
-```
-codebase-researcher (map attack surface) → security-analyst (findings)
-  → fix per finding via bug-fix flow → security-analyst re-verifies
-```
+Bug fix: root-cause-analyst -> developer -> tester -> QA.
 
-When `task-planner` marks a batch of tasks within one of these flows as independent (e.g. the
-parallel `backend-developer | frontend-developer | devops` step above), `project-manager` should
-issue all of that batch's `Task` calls in the same turn rather than round-tripping each one
-serially — Claude Code supports multiple `Task` invocations per assistant turn, and there is no
-dependency forcing them apart.
+Production incident: devops (mitigate) || root-cause-analyst (diagnose) -> developer -> tester -> QA,
+then security review if vulnerability-shaped. Use the HIGH model tier for unclear or data-integrity
+incidents.
 
-## Durable artifacts over re-derivation
+LOW refactor: codebase-researcher (only if uncertain) -> safe-refactor -> tester (if coverage
+is weak) -> light QA.
 
-`codebase-researcher`, `document-researcher`, and `system-design` do read-heavy work whose value
-is easily lost if it only travels forward as prose in a handoff packet — it gets re-summarized (and
-degrades) at every relay, and a later agent may re-trace the same code or re-search the same docs
-rather than trust a paraphrase. All three can write their findings/design brief to a durable file
-(`docs/` or an agreed location, same convention `architecture-engineer` already uses for specs) and
-reference that path in `produced_artifacts`, instead of inlining everything as packet prose. The
-next agent in the chain Reads it once, cold — cheaper than re-deriving it, and it doesn't degrade
-on the way. Use judgment: a two-sentence answer to a narrow question doesn't need a file; a
-multi-file findings report or a design brief that three later stages will reference does.
+Existing API change: codebase-researcher -> api-design -> implementation -> tester -> QA,
+then security review if the access model changes. A breaking or public API change is HIGH.
+
+Security audit: codebase-researcher -> security-analyst (findings) -> fix per bug-fix flow
+-> security-analyst re-verifies.
 
 ## Quality gates
 
-- **GATE-0** (HIGH risk only): design-time security threat model, before any spec work.
-- **GATE-1**: tests executed and green, full suite, no weakened assertions.
-- **GATE-2**: QA pass against original requirements.
-- **GATE-3**: security sign-off, scoped, no unresolved critical/high findings.
+- GATE-0 (HIGH only): design-time threat model, before specification/design.
+- GATE-1: the full relevant test suite is executed and green; assertions are not weakened.
+- GATE-2: QA checks the implementation against the original requirements.
+- GATE-3 (HIGH only): security sign-off with no unresolved critical/high findings.
 
-## Model and effort selection
+## Stop, retry, and escalation rules
 
-Every agent carries a fixed `effort:` value in its own frontmatter (its default reasoning depth)
-alongside its default `model:` tier. `effort` cannot be changed per dispatch — only `model` can,
-via a per-call override on the Task tool that takes precedence over the agent's frontmatter
-default. That makes `model` the only lever available at dispatch time, and it does **not** raise
-the agent's effort — an upgraded model still runs at that role's frozen frontmatter effort.
+- Stop investigating when the requested question is answered with verified evidence, the bounded
+  inspection found no more relevant signal, or the next action would repeat an existing check.
+- Retry a failed task at most twice. After two failed attempts, escalate to project-manager, who
+  must raise the model tier, split the task, or surface the blocker to the user. Never perform a
+  third silent retry.
+- A missing input, contradiction, or material ambiguity is a needs_clarification handoff; do not
+  invent a fact to continue.
+- Any destructive action requires explicit scope confirmation, a recoverable approach where
+  practical, and escalation/approval before execution. Resolve exact targets before acting.
+- Prefer the smallest safe fix that satisfies the acceptance criteria. Do not broaden a fix to
+  clean up adjacent code; record follow-up work separately.
 
-Apply this table when dispatching, keyed by the role's own default tier and the task's risk
-classification (above):
+## Durable artifacts
 
-| Role's default tier | LOW risk | MEDIUM risk | HIGH risk |
-|---|---|---|---|
-| haiku (backend/frontend/devops/safe-refactor/tester/document-researcher) | haiku | haiku (→ sonnet if unusually logic-dense or ambiguous) | **sonnet — mandatory** |
-| sonnet (qa/codebase-researcher/api-design/task-planner/root-cause-analyst) | haiku OK for a narrow/mechanical instance | sonnet | **opus** |
-| opus (project-manager/system-design/architecture-engineer/security-analyst) | opus — never downgrade | opus | opus |
-
-- **HIGH-risk implementation is never left on a haiku-tier agent** — dispatch with the override
-  (e.g. `root-cause-analyst` investigating a production incident or data-integrity issue goes out
-  with `model: opus`, per the sonnet→HIGH cell above).
-- If a model-upgraded role still underperforms on HIGH-risk work, the fix is raising that role's
-  frontmatter `effort` permanently and flagging it to the user — there is no per-dispatch effort
-  escape hatch.
-- opus-tier roles don't get cost relief by downgrading — their value is judgment on high-stakes
-  decisions, not throughput. The lever there is whether to invoke the heavy role at all (see
-  "right-size the team" in `project-manager`), not which tier to run it at.
-- This table is the proactive front half of the escalation rule below — it front-loads the tier
-  decision instead of waiting for two failed attempts. A bug that turns out to be
-  vulnerability-shaped still goes to `security-analyst` outright, not a model-upgraded pass by the
-  same agent.
-
-## Escalation rules
-
-- QA can't explain a failure → `root-cause-analyst`.
-- Anything vulnerability-shaped → `security-analyst`.
-- Spec gap found mid-implementation → back to `architecture-engineer`/`api-design` via
-  `project-manager`, never invented unilaterally (see `agent-handoff-protocol` for how to flag this
-  in a handoff packet).
-- An agent fails a task twice → `project-manager` escalates model tier, splits the task via
-  `task-planner`, or surfaces the blocker to the user — never a third silent retry.
+Read existing findings, threat models, designs, specs, and test reports from their recorded paths before
+investigating again. codebase-researcher, document-researcher, and system-design should
+write multi-file findings/design briefs to docs/ (or an agreed location). Handoffs reference
+those artifacts instead of rescanning or restating them.

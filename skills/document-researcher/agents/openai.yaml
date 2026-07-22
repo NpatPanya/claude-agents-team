@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document Researcher"
+  short_description: "Gather reliable documentation and external references for the team."
+  default_prompt: "Use $document-researcher to apply the Document Researcher methodology to this task."

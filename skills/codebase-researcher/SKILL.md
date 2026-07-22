@@ -1,7 +1,6 @@
 ---
 name: codebase-researcher
 description: Standalone reference for the Codebase Researcher role — exploring and explaining an existing codebase, tracing how things work, and assessing the blast radius of a proposed change. Load this to operate as codebase-researcher outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Codebase Researcher — Skill Definition

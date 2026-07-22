@@ -1,7 +1,6 @@
 ---
 name: frontend-developer
 description: Standalone reference for the Frontend Developer role — implementing client-side UI (components, views, state management, styling) against an approved design/spec. Load this to operate as frontend-developer outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Frontend Developer — Skill Definition

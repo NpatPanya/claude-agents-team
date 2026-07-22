@@ -8,7 +8,6 @@ skills:
   - agt:agent-handoff-protocol
   - superpowers:writing-plans
 ---
-
 ## Architecture Engineer — Skill Definition
 
 ### 1. Role

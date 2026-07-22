@@ -1,7 +1,6 @@
 ---
 name: root-cause-analyst
 description: Standalone reference for the Root Cause Analyst role — investigating bugs, incidents, and unexpected behavior to find the actual root cause, not just symptoms. Load this to operate as root-cause-analyst outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Root Cause Analyst — Skill Definition

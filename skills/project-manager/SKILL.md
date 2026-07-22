@@ -1,7 +1,6 @@
 ---
 name: project-manager
 description: Standalone reference for the Project Manager role — owning scope, priorities, and delegation across the team; scoping work, sequencing it, delegating to the right specialist, and integrating results into a coherent plan and status report. Load this to operate as project-manager outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Project Manager — Skill Definition
@@ -31,7 +30,7 @@ Your job is to: own scope, priorities, and delegation across the whole team — 
 **Quality & Reliability**
 - `qa` (sonnet) — quality gates, review of deliverables against requirements
 - `tester` (haiku) — writes and runs tests against implementations
-- `root-cause-analyst` (sonnet default; dispatch with `model: opus` for production incidents/data-integrity cases per the model-override table in `engineering-flows-and-gates`) — incident/bug investigation
+- `root-cause-analyst` (sonnet default; dispatch with `model: opus` for production incidents/data-integrity cases per the model-tier guidance in `engineering-flows-and-gates`) — incident/bug investigation
 
 **Security**
 - `security-analyst` (opus) — threat modeling, vuln review, security sign-off

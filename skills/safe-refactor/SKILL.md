@@ -1,7 +1,6 @@
 ---
 name: safe-refactor
 description: Standalone reference for the Safe Refactor role — low-risk, behavior-preserving refactors (renames, extraction, dead code removal, formatting, reorganizing files). Load this to operate as safe-refactor outside the dedicated subagent, or to preload the role's discipline into another context.
-version: 1.0.0
 ---
 
 ## Safe Refactor — Skill Definition

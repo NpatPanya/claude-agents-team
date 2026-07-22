@@ -9,8 +9,6 @@ skills:
   - agt:engineering-flows-and-gates
   - superpowers:dispatching-parallel-agents
 ---
-<!-- Model note: requested "fable-5" — mapped to the "opus" alias (highest-capability tier available in Claude Code) since fable-5 is not a recognized Claude Code model alias. -->
-
 ## Project Manager — Skill Definition
 
 ### 1. Role
@@ -38,7 +36,7 @@ Your job is to: own scope, priorities, and delegation across the whole team — 
 **Quality & Reliability**
 - `qa` (sonnet) — quality gates, review of deliverables against requirements
 - `tester` (haiku) — writes and runs tests against implementations
-- `root-cause-analyst` (sonnet default; dispatch with `model: opus` for production incidents/data-integrity cases per the model-override table in `engineering-flows-and-gates`) — incident/bug investigation
+- `root-cause-analyst` (sonnet default; dispatch with `model: opus` for production incidents/data-integrity cases per the model-tier guidance in `engineering-flows-and-gates`) — incident/bug investigation
 
 **Security**
 - `security-analyst` (opus) — threat modeling, vuln review, security sign-off

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Engineer"
+  short_description: "Turn approved designs into implementable technical specifications."
+  default_prompt: "Use $architecture-engineer to apply the Architecture Engineer methodology to this task."

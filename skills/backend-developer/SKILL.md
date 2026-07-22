@@ -1,7 +1,6 @@
 ---
 name: backend-developer
 description: Standalone reference for the Backend Developer role — implementing server-side code (APIs, business logic, database access, background jobs) against an approved spec, with disciplined implementation rather than architecture decisions. Load this to operate as backend-developer outside the dedicated subagent, or to preload the role's scope and No-Guessing discipline into another context.
-version: 1.0.0
 ---
 
 ## Backend Developer — Skill Definition

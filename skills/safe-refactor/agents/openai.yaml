@@ -1,0 +1,4 @@
+interface:
+  display_name: "Safe Refactor"
+  short_description: "Perform scoped, behavior-preserving mechanical refactors."
+  default_prompt: "Use $safe-refactor to apply the Safe Refactor methodology to this task."

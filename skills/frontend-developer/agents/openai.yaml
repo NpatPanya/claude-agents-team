@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Developer"
+  short_description: "Implement client-side UI against approved designs and specifications."
+  default_prompt: "Use $frontend-developer to apply the Frontend Developer methodology to this task."
