@@ -6,8 +6,9 @@
   },
   "metadata": {
     "description": "Marketplace for Claude engineer agent team",
-    "version": "1.3.0"
+    "version": "1.3.1"
   },
+  "allowCrossMarketplaceDependenciesOn": ["claude-plugins-official"],
   "plugins": [
     {
       "name": "agt",
