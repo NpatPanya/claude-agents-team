@@ -1,7 +1,7 @@
 ---
 name: tester
 description: Writes and runs automated tests (unit, integration, e2e as appropriate) against implemented code. Use after backend-developer or frontend-developer completes an implementation, to build test coverage and confirm it actually works. Distinct from QA, which reviews against requirements/quality rather than writing test code.
-model: haiku
+model: sonnet
 effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
 skills:

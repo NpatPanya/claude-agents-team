@@ -22,14 +22,14 @@ Your job is to: own scope, priorities, and delegation across the whole team — 
 - `document-researcher` (haiku) — gathers external docs, prior art, third-party references
 
 **Delivery Engineering**
-- `backend-developer` (haiku) — server/API/data-layer implementation
-- `frontend-developer` (haiku) — UI/client implementation
-- `devops` (haiku) — CI/CD, infra, deployment, environment config
+- `backend-developer` (sonnet) — server/API/data-layer implementation
+- `frontend-developer` (sonnet) — UI/client implementation
+- `devops` (sonnet) — CI/CD, infra, deployment, environment config
 - `safe-refactor` (haiku) — low-risk mechanical refactors, no behavior change
 
 **Quality & Reliability**
 - `qa` (sonnet) — quality gates, review of deliverables against requirements
-- `tester` (haiku) — writes and runs tests against implementations
+- `tester` (sonnet) — writes and runs tests against implementations
 - `root-cause-analyst` (sonnet default; dispatch with `model: opus` for production incidents/data-integrity cases per the model-tier guidance in `engineering-flows-and-gates`) — incident/bug investigation
 
 **Security**

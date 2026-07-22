@@ -1,3 +1,5 @@
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -8,6 +10,12 @@ from scripts.sync_role_agents import role_agents, synchronized_content
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _copy_repo(tmp: str) -> Path:
+    dst = Path(tmp) / "repo"
+    shutil.copytree(ROOT, dst, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+    return dst
 
 
 class RepositoryValidationTests(unittest.TestCase):
@@ -33,6 +41,32 @@ class RepositoryValidationTests(unittest.TestCase):
             name = path.parent.parent.name
             self.assertEqual(interface["default_prompt"].split()[1], "$" + name)
             self.assertTrue(interface["default_prompt"].startswith("Use $" + name))
+
+    def test_undeclared_external_skill_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dst = _copy_repo(tmp)
+            agent = dst / "agents" / "quality" / "tester.md"
+            text = agent.read_text(encoding="utf-8")
+            injected = text.replace(
+                "  - agt:agent-handoff-protocol",
+                "  - agt:agent-handoff-protocol\n  - bogus:thing",
+                1,
+            )
+            self.assertNotEqual(text, injected)  # guard: the anchor still exists
+            agent.write_text(injected, encoding="utf-8")
+            errors = validate_repo.collect_errors(dst)
+            self.assertTrue(any("bogus" in error for error in errors), errors)
+
+    def test_invalid_model_alias_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dst = _copy_repo(tmp)
+            agent = dst / "agents" / "quality" / "tester.md"
+            text = agent.read_text(encoding="utf-8")
+            injected = text.replace("model: sonnet", "model: claude-sonnet-4", 1)
+            self.assertNotEqual(text, injected)
+            agent.write_text(injected, encoding="utf-8")
+            errors = validate_repo.collect_errors(dst)
+            self.assertTrue(any("model must be one of" in error for error in errors), errors)
 
     def test_high_risk_gate_order(self):
         text = (ROOT / "skills/engineering-flows-and-gates/SKILL.md").read_text(encoding="utf-8")

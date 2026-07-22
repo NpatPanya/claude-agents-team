@@ -28,16 +28,16 @@ describe a task) and it delegates to the right specialist via the Task tool.
 ### Delivery Engineering
 | Role | Agent name | Model | Effort | Responsibility |
 |---|---|---|---|---|
-| Backend Developer | `backend-developer` | haiku | medium | Server/API/data-layer implementation |
-| Frontend Developer | `frontend-developer` | haiku | medium | UI/client implementation |
-| DevOps | `devops` | haiku | medium | CI/CD, infra, deployment, rollback plans |
+| Backend Developer | `backend-developer` | sonnet | medium | Server/API/data-layer implementation |
+| Frontend Developer | `frontend-developer` | sonnet | medium | UI/client implementation |
+| DevOps | `devops` | sonnet | medium | CI/CD, infra, deployment, rollback plans |
 | Safe Refactor | `safe-refactor` | haiku | low | Behavior-preserving mechanical refactors only |
 
 ### Quality & Reliability
 | Role | Agent name | Model | Effort | Responsibility |
 |---|---|---|---|---|
 | QA | `qa` | sonnet | high | Reviews deliverables against original requirements, pass/fail gate |
-| Tester | `tester` | haiku | medium | Writes and runs tests, owns the regression suite |
+| Tester | `tester` | sonnet | medium | Writes and runs tests, owns the regression suite |
 | Root Cause Analyst | `root-cause-analyst` | sonnet (dispatched with `model: opus` override for incidents) | high | Bug/incident investigation with regression-guard recommendations |
 
 ### Security
@@ -86,9 +86,12 @@ test-*after* by design; TDD is test-first — a topical match with a workflow co
 subagent working from a handoff packet has no channel to the user).
 
 > **Dependency:** assignments prefixed `superpowers:` and `frontend-design:` require those plugins to
-> be installed. If one is missing, Claude Code skips that entry and logs a warning to the debug log —
-> the agent still runs, just without the preloaded methodology. Remove those lines from the `skills:`
-> blocks to make this plugin fully self-contained.
+> be installed. This dependency is declared in `.claude-plugin/plugin.json` (`dependencies`), so Claude
+> Code installs them alongside `agt`. If one is somehow missing at runtime, Claude Code skips that entry
+> and logs a warning to the debug log — the agent still runs, just without the preloaded methodology.
+> `scripts/validate_repo.py` rejects any external skill reference whose plugin isn't declared there, so a
+> new external dependency can't be added to a `skills:` block without also declaring it. To make this
+> plugin fully self-contained, remove those lines from the `skills:` blocks and drop the `dependencies`.
 
 `codebase-researcher`, `document-researcher`, and `system-design` can write their findings/design brief to a durable file instead of only returning it as packet prose — downstream agents Read it once instead of a paraphrase degrading through relays. See "Durable artifacts over re-derivation" in `engineering-flows-and-gates`.
 
@@ -128,7 +131,7 @@ whichever specialist the situation calls for.
 ## Customizing
 
 - Each agent's `tools:` line restricts what it can touch. Adjust per your workflow.
-- Each agent's `skills:` line controls which skill content is preloaded into its context at startup. Adding a skill costs tokens on *every* dispatch of that agent (roughly `bytes ÷ 4`), so keep haiku-tier agents lean — the binding constraint there is instruction dilution, not cost. Adding `Skill` to `tools:` would let an agent discover and invoke *any* installed skill at runtime; it's deliberately omitted everywhere so each agent stays scoped to its assigned set.
+- Each agent's `skills:` line controls which skill content is preloaded into its context at startup. Adding a skill costs tokens on *every* dispatch of that agent (roughly `bytes ÷ 4`), so keep the leaner mechanical roles (`safe-refactor`, `document-researcher`) lean — there the binding constraint is instruction dilution, not cost. Adding `Skill` to `tools:` would let an agent discover and invoke *any* installed skill at runtime; it's deliberately omitted everywhere so each agent stays scoped to its assigned set.
 - Descriptions double as routing triggers for auto-suggestion — keep them specific if edited.
 - `codebase-researcher` vs. `document-researcher`: former traces your own codebase, latter pulls external docs.
 - `api-design` vs. `architecture-engineer`: former owns the request/response contract at the API boundary; latter owns internal module structure and data storage.

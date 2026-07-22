@@ -25,6 +25,8 @@ EXPECTED_SKILL_KEYS = {"name", "description"}
 EXPECTED_AGENT_KEYS = {"name", "description", "model", "effort", "tools", "skills"}
 OPENAI_TOP_LEVEL_KEYS = {"interface", "dependencies", "policy"}
 OPENAI_INTERFACE_KEYS = {"display_name", "short_description", "default_prompt", "icon_small", "icon_large"}
+ALLOWED_MODELS = {"haiku", "sonnet", "opus"}
+ALLOWED_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
 
 DISPLAY_NAMES = {
     "agent-handoff-protocol": "Agent Handoff Protocol",
@@ -110,8 +112,23 @@ def validate_skills(errors: list[str]) -> dict[str, Path]:
     return skills
 
 
+def declared_dependency_plugins() -> set[str]:
+    """Plugin names declared under `dependencies` in plugin.json."""
+    plugin_path = ROOT / ".claude-plugin" / "plugin.json"
+    try:
+        data = json.loads(plugin_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    names: set[str] = set()
+    for dep in data.get("dependencies", []) or []:
+        if isinstance(dep, dict) and isinstance(dep.get("name"), str):
+            names.add(dep["name"])
+    return names
+
+
 def validate_agents(errors: list[str], skills: dict[str, Path]) -> dict[str, Path]:
     agents: dict[str, Path] = {}
+    dependency_plugins = declared_dependency_plugins()
     for path in sorted((ROOT / "agents").glob("**/*.md")):
         try:
             data, _ = parse_frontmatter(path)
@@ -131,6 +148,12 @@ def validate_agents(errors: list[str], skills: dict[str, Path]) -> dict[str, Pat
         for key in ("description", "model", "effort"):
             if not isinstance(data.get(key), str) or not data[key].strip():
                 _error(errors, path, f"{key} must be a non-empty string")
+        model = data.get("model")
+        if isinstance(model, str) and model.strip() and model not in ALLOWED_MODELS:
+            _error(errors, path, f"model must be one of {sorted(ALLOWED_MODELS)}; got {model!r}")
+        effort = data.get("effort")
+        if isinstance(effort, str) and effort.strip() and effort not in ALLOWED_EFFORTS:
+            _error(errors, path, f"effort must be one of {sorted(ALLOWED_EFFORTS)}; got {effort!r}")
         tools = data.get("tools")
         if not ((isinstance(tools, list) and tools) or (isinstance(tools, str) and tools.strip())):
             _error(errors, path, "tools must be a non-empty list or comma-separated string")
@@ -138,10 +161,19 @@ def validate_agents(errors: list[str], skills: dict[str, Path]) -> dict[str, Pat
             _error(errors, path, "skills must be a list")
         else:
             for skill_ref in data["skills"]:
-                if isinstance(skill_ref, str) and skill_ref.startswith("agt:"):
+                if not isinstance(skill_ref, str):
+                    _error(errors, path, f"skill reference must be a string; got {skill_ref!r}")
+                    continue
+                if skill_ref.startswith("agt:"):
                     skill_name = skill_ref[4:]
                     if skill_name not in skills:
                         _error(errors, path, f"unresolved local skill reference {skill_ref!r}")
+                elif ":" in skill_ref:
+                    namespace = skill_ref.split(":", 1)[0]
+                    if namespace not in dependency_plugins:
+                        _error(errors, path, f"external skill reference {skill_ref!r} requires plugin {namespace!r} to be declared in plugin.json dependencies")
+                else:
+                    _error(errors, path, f"skill reference {skill_ref!r} must be namespaced (agt:<name> or <plugin>:<name>)")
     for name, path in agents.items():
         if name not in skills:
             _error(errors, path, f"no matching canonical skill for agent {name!r}")

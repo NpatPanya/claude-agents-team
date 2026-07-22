@@ -6,5 +6,9 @@
     "name": "Npat",
     "email":"npatonpym@gmail.com"
   },
-  "keywords": ["agents", "engineering", "orchestration", "software-development", "code-review", "security", "qa"]
+  "keywords": ["agents", "engineering", "orchestration", "software-development", "code-review", "security", "qa"],
+  "dependencies": [
+    { "name": "superpowers", "version": "*" },
+    { "name": "frontend-design", "version": "*" }
+  ]
 }
