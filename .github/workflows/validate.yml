@@ -1,8 +1,10 @@
 name: Validate
 
+# Auto-runs (push / pull_request) are temporarily disabled while GitHub
+# Actions is billing-locked, so failed-start runs don't send email noise.
+# Re-enable by restoring `push:` and `pull_request:` once billing is resolved.
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   validate:
