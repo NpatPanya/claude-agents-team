@@ -1,6 +1,6 @@
 # Engineering Agent Team
 
-A 15-role software engineering subagent team, installable as a plugin, organized into six
+A 14-role software engineering subagent team, installable as a plugin, organized into six
 departments like an engineering org. `project-manager` is the orchestrator — talk to it (or just
 describe a task) and it delegates to the right specialist via the Task tool.
 
@@ -9,8 +9,7 @@ describe a task) and it delegates to the right specialist via the Task tool.
 ### Orchestration
 | Role | Agent name | Model | Effort | Responsibility |
 |---|---|---|---|---|
-| Project Manager | `project-manager` | opus | high | Orchestrator: scopes, classifies risk, delegates, reconciles conflicts, reports status |
-| Task Planner | `task-planner` | sonnet | medium | Breaks specs into ordered, risk-tagged, dependency-aware tasks |
+| Project Manager | `project-manager` | opus | high | Orchestrator: scopes, classifies risk, breaks work into ordered dependency-aware tasks, delegates, reconciles conflicts, reports status |
 
 ### Architecture & Design
 | Role | Agent name | Model | Effort | Responsibility |
@@ -55,8 +54,8 @@ This plugin is distributed as a `.plugin` file. Install it through Cowork's plug
 
 Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README:
 
-- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 15 agents.
-- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the delegation and model-tier policy, the quality gates, and the escalation rules. Preloaded into `project-manager`/`task-planner` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
+- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 14 agents.
+- **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work skips `system-design` unless it's HIGH risk or a genuine architecture decision), the risk-classification rubric, the delegation and model-tier policy, the quality gates, and the escalation rules. Preloaded into `project-manager` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
 
 ### Per-agent skill assignments
 
@@ -65,10 +64,9 @@ startup, so an agent applies its methodology without having to discover or invok
 lists `Skill` in `tools:`, which means each one is scoped to exactly the skills below and cannot
 reach anything else.
 
-| Agent | Preloaded skills (beyond `agent-handoff-protocol`, which all 15 get) |
+| Agent | Preloaded skills (beyond `agent-handoff-protocol`, which all 14 get) |
 |---|---|
 | `project-manager` | `engineering-flows-and-gates`, `superpowers:dispatching-parallel-agents` |
-| `task-planner` | `engineering-flows-and-gates`, `superpowers:writing-plans` |
 | `architecture-engineer` | `superpowers:writing-plans` |
 | `backend-developer` | `superpowers:verification-before-completion` |
 | `frontend-developer` | `frontend-design:frontend-design`, `superpowers:verification-before-completion` |
@@ -123,7 +121,7 @@ every relay. `project-manager` classifies each task's risk (LOW/MEDIUM/HIGH) up 
 The 6 execution flows (feature / bugfix / incident / refactor / API-change / security-audit), the
 4 quality gates (GATE-0 through GATE-3), and the escalation rules live in
 `skills/engineering-flows-and-gates/SKILL.md` — that's the canonical reference; this README doesn't
-restate it. In short: `project-manager` and `task-planner` sequence work against those flows by
+restate it. In short: `project-manager` sequences work against those flows by
 default, `qa`/`security-analyst` gate work against those checkpoints, and any agent that hits an
 unresolvable gap flags it back rather than guessing (per `agent-handoff-protocol`), routing through
 whichever specialist the situation calls for.
@@ -136,7 +134,7 @@ whichever specialist the situation calls for.
 - `codebase-researcher` vs. `document-researcher`: former traces your own codebase, latter pulls external docs.
 - `api-design` vs. `architecture-engineer`: former owns the request/response contract at the API boundary; latter owns internal module structure and data storage.
 - Department subdirectories under `agents/` are organizational only — moving a file between departments never changes its `name:` frontmatter, so it never breaks how the agent is invoked or `@`-mentioned.
-- `model:` can be overridden per dispatch (the Task tool's per-call `model` param takes precedence over the frontmatter default) — `project-manager`/`task-planner` use this per the model-tier guidance in `engineering-flows-and-gates` to upgrade a task's model tier for higher risk. `effort:` cannot be overridden per dispatch; it's a fixed default you tune once in the agent's own file.
+- `model:` can be overridden per dispatch (the Task tool's per-call `model` param takes precedence over the frontmatter default) — `project-manager` uses this per the model-tier guidance in `engineering-flows-and-gates` to upgrade a task's model tier for higher risk. `effort:` cannot be overridden per dispatch; it's a fixed default you tune once in the agent's own file.
 
 ## Workflow reliability policy
 

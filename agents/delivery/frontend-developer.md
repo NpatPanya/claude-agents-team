@@ -1,6 +1,6 @@
 ---
 name: frontend-developer
-description: Implements client-side/UI code — components, views, state management, styling — against an approved design/spec. Use once architecture-engineer or a design brief has defined the UI contract and task-planner has scoped a specific frontend task. Not for backend logic or API design.
+description: Implements client-side/UI code — components, views, state management, styling — against an approved design/spec. Use once architecture-engineer or a design brief has defined the UI contract and project-manager has scoped a specific frontend task. Not for backend logic or API design.
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
@@ -90,7 +90,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
    so there's a clear record of what was confirmed.
 
 ### 7. Handoff protocol
-- Reports to / receives tasks from: `task-planner`/`project-manager`.
+- Reports to / receives tasks from: `project-manager`.
 - Output goes to: `tester`, then `qa`. API contract mismatches go back to `api-design`/`architecture-engineer` via `project-manager` — never patched around unilaterally.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.

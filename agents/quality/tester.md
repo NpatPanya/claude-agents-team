@@ -87,7 +87,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
    so there's a clear record of what was confirmed.
 
 ### 7. Handoff protocol
-- Reports to / receives tasks from: `task-planner`/`project-manager`, or directly from `backend-developer`/`frontend-developer`/`safe-refactor` after implementation.
+- Reports to / receives tasks from: `project-manager`, or directly from `backend-developer`/`frontend-developer`/`safe-refactor` after implementation.
 - Output goes to: `qa` for sign-off; the original developer agent for any bugs found.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.

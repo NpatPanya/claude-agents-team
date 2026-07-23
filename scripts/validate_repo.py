@@ -44,7 +44,6 @@ DISPLAY_NAMES = {
     "safe-refactor": "Safe Refactor",
     "security-analyst": "Security Analyst",
     "system-design": "System Design",
-    "task-planner": "Task Planner",
     "tester": "Tester",
 }
 
@@ -64,7 +63,6 @@ SHORT_DESCRIPTIONS = {
     "safe-refactor": "Perform scoped, behavior-preserving mechanical refactors.",
     "security-analyst": "Threat-model and review authentication, input, secrets, and data exposure.",
     "system-design": "Define high-level architecture, boundaries, data flow, and tradeoffs.",
-    "task-planner": "Break approved work into ordered, dependency-aware implementation tasks.",
     "tester": "Write and run automated tests, including relevant edge cases.",
 }
 
@@ -234,7 +232,6 @@ def validate_high_flow(errors: list[str]) -> None:
         "security-analyst (GATE-0 threat model)",
         "system-design",
         "architecture-engineer/api-design",
-        "task-planner",
         "implementation",
         "tester",
         "QA",

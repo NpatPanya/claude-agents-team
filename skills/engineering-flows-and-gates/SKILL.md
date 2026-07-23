@@ -1,6 +1,6 @@
 ---
 name: engineering-flows-and-gates
-description: This skill should be used when sequencing multi-agent work, classifying a task's risk tier and reasoning effort, selecting quality gates, or deciding where to escalate when work goes wrong. Primarily used by project-manager and task-planner, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied.
+description: This skill should be used when sequencing multi-agent work, classifying a task's risk tier and reasoning effort, selecting quality gates, or deciding where to escalate when work goes wrong. Primarily used by project-manager, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied.
 ---
 
 # Engineering flows and gates
@@ -52,7 +52,7 @@ HIGH-risk work (required order):
 
 ~~~text
 research -> security-analyst (GATE-0 threat model) -> system-design
-  -> architecture-engineer/api-design -> task-planner -> implementation
+  -> architecture-engineer/api-design -> implementation
   -> tester -> QA -> security-analyst (GATE-3)
 ~~~
 
@@ -63,7 +63,7 @@ scoped security sign-off after QA and cannot be replaced by a generic test resul
 LOW/MEDIUM new feature:
 
 ~~~text
-focused research (only if needed) -> architecture-engineer/api-design -> task-planner
+focused research (only if needed) -> architecture-engineer/api-design
   -> implementation -> tester -> QA -> project-manager
 ~~~
 

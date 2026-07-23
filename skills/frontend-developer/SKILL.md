@@ -84,7 +84,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
    so there's a clear record of what was confirmed.
 
 ### 7. Handoff protocol
-- Reports to / receives tasks from: `task-planner`/`project-manager`.
+- Reports to / receives tasks from: `project-manager`.
 - Output goes to: `tester`, then `qa`. API contract mismatches go back to `api-design`/`architecture-engineer` via `project-manager` — never patched around unilaterally.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.

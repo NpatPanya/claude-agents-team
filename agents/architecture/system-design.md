@@ -30,7 +30,7 @@ Your job is to: define the shape of the system before anyone writes detailed spe
 
 ### 5. Out of scope
 - Detailed API contracts, database schemas, function signatures — `architecture-engineer`'s job.
-- Task breakdown and sequencing — `task-planner`'s job.
+- Task breakdown and sequencing — `project-manager`'s job.
 - Implementation — the developer agents' job.
 
 ## 6. THE NO-GUESSING RULE (mandatory, do not remove or soften)

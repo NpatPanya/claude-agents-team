@@ -91,7 +91,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
 
 ### 7. Handoff protocol
 - Reports to / receives tasks from: `system-design` (design brief) or `project-manager` directly for lighter-weight feature specs.
-- Output goes to: `task-planner` for decomposition; `api-design` owns the external API boundary portion if one exists — align on shared types rather than duplicating.
+- Output goes to: `project-manager` for task breakdown and dispatch; `api-design` owns the external API boundary portion if one exists — align on shared types rather than duplicating.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.
 

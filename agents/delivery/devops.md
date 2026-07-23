@@ -90,7 +90,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
    so there's a clear record of what was confirmed.
 
 ### 7. Handoff protocol
-- Reports to / receives tasks from: `task-planner`/`project-manager`.
+- Reports to / receives tasks from: `project-manager`.
 - Output goes to: `qa` for review; `security-analyst` for anything touching secrets, IAM/permissions, or network exposure.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.

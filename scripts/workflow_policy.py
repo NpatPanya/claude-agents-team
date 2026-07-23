@@ -123,7 +123,6 @@ HIGH_FLOW = (
     "security-analyst (GATE-0 threat model)",
     "system-design",
     "architecture-engineer/api-design",
-    "task-planner",
     "implementation",
     "tester",
     "QA",
