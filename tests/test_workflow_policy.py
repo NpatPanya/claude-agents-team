@@ -29,6 +29,10 @@ class WorkflowPolicyTests(unittest.TestCase):
         self.assertFalse(retry_allowed(2))
         self.assertIn("verification", delegation_policy("LOW")["stop_condition"])
 
+    def test_dispatch_is_strictly_sequential(self):
+        for tier in ("LOW", "MEDIUM", "HIGH"):
+            self.assertFalse(delegation_policy(tier)["parallel_read_only_checks"], tier)
+
 
 if __name__ == "__main__":
     unittest.main()

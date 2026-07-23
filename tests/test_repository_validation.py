@@ -24,7 +24,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_role_agents_match_canonical_skills(self):
         pairs = role_agents(ROOT)
-        self.assertEqual(len(pairs), 15)
+        self.assertEqual(len(pairs), 12)
         for agent_path, skill_path in pairs:
             self.assertEqual(
                 agent_path.read_text(encoding="utf-8").replace("\r\n", "\n"),
@@ -33,7 +33,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_codex_metadata_schema_and_prompts(self):
         metadata = list((ROOT / "skills").glob("*/agents/openai.yaml"))
-        self.assertEqual(len(metadata), 17)
+        self.assertEqual(len(metadata), 14)
         for path in metadata:
             data = yaml.safe_load(path.read_text(encoding="utf-8"))
             self.assertIn("interface", data)
@@ -74,9 +74,7 @@ class RepositoryValidationTests(unittest.TestCase):
         sequence = [
             "research",
             "security-analyst (GATE-0 threat model)",
-            "system-design",
-            "architecture-engineer/api-design",
-            "task-planner",
+            "architecture-engineer",
             "implementation",
             "tester",
             "QA",

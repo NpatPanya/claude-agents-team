@@ -1,6 +1,6 @@
 ---
 name: engineering-flows-and-gates
-description: This skill should be used when sequencing multi-agent work, classifying a task's risk tier and reasoning effort, selecting quality gates, or deciding where to escalate when work goes wrong. Primarily used by project-manager and task-planner, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied.
+description: This skill should be used when sequencing multi-agent work, classifying a task's risk tier and reasoning effort, selecting quality gates, or deciding where to escalate when work goes wrong. Primarily used by project-manager, and by qa, security-analyst, and root-cause-analyst when deciding whether a gate is satisfied.
 ---
 
 # Engineering flows and gates
@@ -39,21 +39,22 @@ LOW means the main agent works alone: perform minimal focused inspection, make t
 safe change, and run one relevant verification. Do not dispatch a sub-agent.
 
 MEDIUM permits one focused sub-agent only when its checkable output reduces total effort. The
-main agent remains accountable. Parallelize only independent, read-only checks; never parallelize
-dependent edits. Stop once the focused output is consumed and the verification is green.
+main agent remains accountable. Dispatch that sub-agent on its own and wait for its result — never
+run agents in parallel or in the background, even for independent read-only checks. Stop once the
+focused output is consumed and the verification is green.
 
 HIGH requires the complete gated flow, targeted specialists, final QA/security review, and a
 recorded human review. The number of specialists is driven by the attack surface and dependencies,
-not by a default team size.
+not by a default team size. Every hand-off is still strictly sequential — one agent at a time, its
+result in hand before the next is dispatched.
 
 ## Execution flows
 
 HIGH-risk work (required order):
 
 ~~~text
-research -> security-analyst (GATE-0 threat model) -> system-design
-  -> architecture-engineer/api-design -> task-planner -> implementation
-  -> tester -> QA -> security-analyst (GATE-3)
+research -> security-analyst (GATE-0 threat model) -> architecture-engineer
+  -> implementation -> tester -> QA -> security-analyst (GATE-3)
 ~~~
 
 GATE-0 must pass before specification or design begins. The implementation stage may use targeted
@@ -63,7 +64,7 @@ scoped security sign-off after QA and cannot be replaced by a generic test resul
 LOW/MEDIUM new feature:
 
 ~~~text
-focused research (only if needed) -> architecture-engineer/api-design -> task-planner
+focused research (only if needed) -> architecture-engineer
   -> implementation -> tester -> QA -> project-manager
 ~~~
 
@@ -72,14 +73,14 @@ decision upgrades the task to HIGH.
 
 Bug fix: root-cause-analyst -> developer -> tester -> QA.
 
-Production incident: devops (mitigate) || root-cause-analyst (diagnose) -> developer -> tester -> QA,
-then security review if vulnerability-shaped. Use the HIGH model tier for unclear or data-integrity
-incidents.
+Production incident: devops (mitigate) -> root-cause-analyst (diagnose) -> developer -> tester -> QA,
+then security review if vulnerability-shaped. Mitigate first to stop the bleeding, then diagnose —
+sequentially, not concurrently. Use the HIGH model tier for unclear or data-integrity incidents.
 
 LOW refactor: codebase-researcher (only if uncertain) -> safe-refactor -> tester (if coverage
 is weak) -> light QA.
 
-Existing API change: codebase-researcher -> api-design -> implementation -> tester -> QA,
+Existing API change: codebase-researcher -> architecture-engineer -> implementation -> tester -> QA,
 then security review if the access model changes. A breaking or public API change is HIGH.
 
 Security audit: codebase-researcher -> security-analyst (findings) -> fix per bug-fix flow
@@ -109,6 +110,6 @@ Security audit: codebase-researcher -> security-analyst (findings) -> fix per bu
 ## Durable artifacts
 
 Read existing findings, threat models, designs, specs, and test reports from their recorded paths before
-investigating again. codebase-researcher, document-researcher, and system-design should
+investigating again. codebase-researcher, document-researcher, and architecture-engineer should
 write multi-file findings/design briefs to docs/ (or an agreed location). Handoffs reference
 those artifacts instead of rescanning or restating them.

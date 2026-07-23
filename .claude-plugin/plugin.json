@@ -1,14 +1,13 @@
 {
   "name": "agt",
-  "version": "1.3.1",
-  "description": "A 15-role software engineering subagent team organized into six departments (Orchestration, Architecture & Design, Research & Intelligence, Delivery Engineering, Quality & Reliability, Security) with a project-manager orchestrator. Includes two shared skills — a structured agent-handoff protocol and a canonical execution-flows-and-gates reference — covering features, bug fixes, incidents, refactors, API changes, and security audits.",
+  "version": "2.0.0",
+  "description": "A 12-role software engineering subagent team organized into six departments (Orchestration, Architecture & Design, Research & Intelligence, Delivery Engineering, Quality & Reliability, Security) with a project-manager orchestrator at the top that also handles secretary duties and dispatches specialists strictly one at a time (no parallel or background execution). Includes two shared skills — a structured agent-handoff protocol and a canonical execution-flows-and-gates reference — covering features, bug fixes, incidents, refactors, API changes, and security audits.",
   "author": {
     "name": "Npat",
     "email":"npatonpym@gmail.com"
   },
   "keywords": ["agents", "engineering", "orchestration", "software-development", "code-review", "security", "qa"],
   "dependencies": [
-    { "name": "superpowers", "marketplace": "claude-plugins-official" },
     { "name": "frontend-design", "marketplace": "claude-plugins-official" }
   ]
 }
