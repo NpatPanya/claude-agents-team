@@ -1,15 +1,18 @@
 # Engineering Agent Team
 
 A 12-role software engineering subagent team, installable as a plugin, organized into six
-departments like an engineering org. `project-manager` is the orchestrator — talk to it (or just
-describe a task) and it delegates to the right specialist via the Task tool.
+departments like an engineering org. `project-manager` sits at the top and is the single entry
+point — talk to it (or just describe a task) and it decides which specialist handles each piece,
+dispatching them via the Task tool **strictly one at a time** (never in parallel or in the
+background). It also acts as the team's secretary: tracking status, drafting communications, and
+surfacing what's pending or blocked.
 
 ## Roster
 
 ### Orchestration
 | Role | Agent name | Model | Effort | Responsibility |
 |---|---|---|---|---|
-| Project Manager | `project-manager` | opus | high | Orchestrator: scopes, classifies risk, breaks work into ordered dependency-aware tasks, delegates, reconciles conflicts, reports status |
+| Project Manager | `project-manager` | opus | high | Top-level orchestrator & secretary: sole entry point; scopes, classifies risk, breaks work into ordered dependency-aware tasks, dispatches specialists one at a time, reconciles conflicts, tracks status, drafts communications |
 
 ### Architecture & Design
 | Role | Agent name | Model | Effort | Responsibility |
@@ -107,7 +110,9 @@ handoff:
 `project-manager` fills this in to delegate; the receiving agent fills in the same shape to report
 back — one vocabulary in both directions, so a handoff is *forwarded* rather than re-composed at
 every relay. `project-manager` classifies each task's risk (LOW/MEDIUM/HIGH) up front per
-`engineering-flows-and-gates`, which determines which quality gates are mandatory.
+`engineering-flows-and-gates`, which determines which quality gates are mandatory. Hand-offs are
+**strictly sequential**: `project-manager` dispatches one agent, waits for its packet, then decides
+the next — no agent runs in parallel with another or as a background task.
 
 ### Execution flows, quality gates, and escalation
 

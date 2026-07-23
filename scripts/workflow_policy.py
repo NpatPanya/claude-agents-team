@@ -92,7 +92,12 @@ classify_task = classify_risk
 
 
 def delegation_policy(risk: str) -> dict[str, Any]:
-    """Return the hard delegation limits and gates for a risk tier."""
+    """Return the hard delegation limits and gates for a risk tier.
+
+    Dispatch is strictly sequential at every tier: project-manager hands off one
+    agent at a time and waits for its result before the next. `parallel_read_only_checks`
+    is therefore False everywhere — there is no parallel or background dispatch.
+    """
     risk = risk.upper()
     if risk not in RISK_LEVELS:
         raise ValueError(f"Unsupported risk tier: {risk}")
@@ -106,13 +111,13 @@ def delegation_policy(risk: str) -> dict[str, Any]:
     if risk == "MEDIUM":
         return {
             "max_sub_agents": 1,
-            "parallel_read_only_checks": True,
+            "parallel_read_only_checks": False,
             "required_gates": ("GATE-1", "GATE-2"),
             "stop_condition": "the focused specialist reduces total effort and its checkable output is consumed",
         }
     return {
         "max_sub_agents": None,
-        "parallel_read_only_checks": True,
+        "parallel_read_only_checks": False,
         "required_gates": ("GATE-0", "GATE-1", "GATE-2", "GATE-3"),
         "stop_condition": "all required gates pass and human review is recorded",
     }

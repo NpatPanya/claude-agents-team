@@ -39,12 +39,14 @@ LOW means the main agent works alone: perform minimal focused inspection, make t
 safe change, and run one relevant verification. Do not dispatch a sub-agent.
 
 MEDIUM permits one focused sub-agent only when its checkable output reduces total effort. The
-main agent remains accountable. Parallelize only independent, read-only checks; never parallelize
-dependent edits. Stop once the focused output is consumed and the verification is green.
+main agent remains accountable. Dispatch that sub-agent on its own and wait for its result — never
+run agents in parallel or in the background, even for independent read-only checks. Stop once the
+focused output is consumed and the verification is green.
 
 HIGH requires the complete gated flow, targeted specialists, final QA/security review, and a
 recorded human review. The number of specialists is driven by the attack surface and dependencies,
-not by a default team size.
+not by a default team size. Every hand-off is still strictly sequential — one agent at a time, its
+result in hand before the next is dispatched.
 
 ## Execution flows
 
@@ -71,9 +73,9 @@ decision upgrades the task to HIGH.
 
 Bug fix: root-cause-analyst -> developer -> tester -> QA.
 
-Production incident: devops (mitigate) || root-cause-analyst (diagnose) -> developer -> tester -> QA,
-then security review if vulnerability-shaped. Use the HIGH model tier for unclear or data-integrity
-incidents.
+Production incident: devops (mitigate) -> root-cause-analyst (diagnose) -> developer -> tester -> QA,
+then security review if vulnerability-shaped. Mitigate first to stop the bleeding, then diagnose —
+sequentially, not concurrently. Use the HIGH model tier for unclear or data-integrity incidents.
 
 LOW refactor: codebase-researcher (only if uncertain) -> safe-refactor -> tester (if coverage
 is weak) -> light QA.
