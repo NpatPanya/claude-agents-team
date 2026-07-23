@@ -52,7 +52,7 @@ This plugin is distributed as a `.plugin` file. Install it through Cowork's plug
 
 Two plugin skills hold the knowledge that used to be duplicated across agent files or scattered in this README:
 
-- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 14 agents.
+- **`agent-handoff-protocol`** — the structured handoff-packet format every agent uses to dispatch or report back work (replaces free-form delegation prose), plus the canonical "flag a gap, don't invent" rule. Preloaded into all 12 agents.
 - **`engineering-flows-and-gates`** — the execution flow for each kind of task (with risk-tiered variants — e.g. new-feature work gets a lighter `architecture-engineer` spec unless it's HIGH risk or a genuine architecture decision warranting a full design brief), the risk-classification rubric, the delegation and model-tier policy, the quality gates, and the escalation rules. Preloaded into `project-manager` (sequencing) and `qa`/`security-analyst`/`root-cause-analyst` (gates and escalation).
 
 ### Per-agent skill assignments
@@ -62,30 +62,27 @@ startup, so an agent applies its methodology without having to discover or invok
 lists `Skill` in `tools:`, which means each one is scoped to exactly the skills below and cannot
 reach anything else.
 
-| Agent | Preloaded skills (beyond `agent-handoff-protocol`, which all 14 get) |
+| Agent | Preloaded skills (beyond `agent-handoff-protocol`, which all 12 get) |
 |---|---|
-| `project-manager` | `engineering-flows-and-gates`, `superpowers:dispatching-parallel-agents` |
-| `architecture-engineer` | `superpowers:writing-plans` |
-| `backend-developer` | `superpowers:verification-before-completion` |
-| `frontend-developer` | `frontend-design:frontend-design`, `superpowers:verification-before-completion` |
-| `devops` | `superpowers:verification-before-completion` |
-| `safe-refactor` | `superpowers:verification-before-completion` |
-| `qa` | `engineering-flows-and-gates`, `superpowers:verification-before-completion` |
-| `tester` | `superpowers:verification-before-completion` |
-| `root-cause-analyst` | `superpowers:systematic-debugging`, `engineering-flows-and-gates` |
+| `project-manager` | `engineering-flows-and-gates` |
+| `qa` | `engineering-flows-and-gates` |
+| `root-cause-analyst` | `engineering-flows-and-gates` |
 | `security-analyst` | `engineering-flows-and-gates` |
-| `codebase-researcher`, `document-researcher` | *(none — no external skill fills a real methodology gap)* |
+| `frontend-developer` | `frontend-design:frontend-design` |
+| `architecture-engineer`, `backend-developer`, `devops`, `safe-refactor`, `tester`, `codebase-researcher`, `document-researcher` | *(none — self-contained on the shared `agt:` skills)* |
 
-Deliberately **not** assigned: `superpowers:test-driven-development` to `tester` (the agent is
-test-*after* by design; TDD is test-first — a topical match with a workflow conflict).
+`tester` is deliberately test-*after* — it writes and runs tests against already-implemented code, not
+test-first — a workflow choice, not an oversight.
 
-> **Dependency:** assignments prefixed `superpowers:` and `frontend-design:` require those plugins to
-> be installed. This dependency is declared in `.claude-plugin/plugin.json` (`dependencies`), so Claude
-> Code installs them alongside `agt`. If one is somehow missing at runtime, Claude Code skips that entry
-> and logs a warning to the debug log — the agent still runs, just without the preloaded methodology.
-> `scripts/validate_repo.py` rejects any external skill reference whose plugin isn't declared there, so a
-> new external dependency can't be added to a `skills:` block without also declaring it. To make this
-> plugin fully self-contained, remove those lines from the `skills:` blocks and drop the `dependencies`.
+> **Dependency:** the only external skill assignment is `frontend-design:frontend-design` (on
+> `frontend-developer`), which requires the `frontend-design` plugin. It's declared in
+> `.claude-plugin/plugin.json` (`dependencies`), so Claude Code installs it alongside `agt`. If it's
+> missing at runtime, Claude Code skips that entry and logs a warning to the debug log — the agent still
+> runs, just without the preloaded design methodology. `scripts/validate_repo.py` rejects any external
+> skill reference whose plugin isn't declared there, so a new external dependency can't be added to a
+> `skills:` block without also declaring it. Every other role is fully self-contained on the two shared
+> `agt:` skills, with its verification, debugging, and planning discipline written directly into the role
+> definition.
 
 `codebase-researcher`, `document-researcher`, and `architecture-engineer` can write their findings/design brief to a durable file instead of only returning it as packet prose — downstream agents Read it once instead of a paraphrase degrading through relays. See "Durable artifacts over re-derivation" in `engineering-flows-and-gates`.
 

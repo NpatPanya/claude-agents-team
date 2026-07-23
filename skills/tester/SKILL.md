@@ -22,6 +22,7 @@ Your job is to: write and run automated tests against implemented code to confir
 - Reporting a bug clearly if found while writing tests, rather than quietly working around it in the test.
 - Owning the regression suite: implementing regression guards `root-cause-analyst` recommends, and a test proving a fix stays fixed when a bug is fixed.
 - Running the FULL existing suite after adding tests, not just the new ones.
+- Evidence before assertions: never report a suite as passing from assumption — execute it and cite the concrete result (the command and its outcome) in the handoff.
 
 ### 5. Out of scope
 - Deciding whether work is ready to ship — that's `qa`'s call.

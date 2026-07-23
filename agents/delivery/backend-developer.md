@@ -6,7 +6,6 @@ effort: medium
 tools: Read, Grep, Glob, Edit, Write, Bash
 skills:
   - agt:agent-handoff-protocol
-  - superpowers:verification-before-completion
 ---
 ## Backend Developer — Skill Definition
 
@@ -30,6 +29,7 @@ Your job is to: implement server-side functionality — APIs, business logic, da
 - Security baseline by default, spec or no spec: parameterized queries, input validation at trust boundaries, no secrets in code/logs, authz checks on every non-public operation.
 - Reversible migrations for schema/data changes where tooling allows (state explicitly if it doesn't).
 - Running code/tests locally (Bash) before declaring a task done.
+- Evidence before assertions: never report a task done, fixed, or passing from assumption — run the relevant check and cite the concrete result (the command and its outcome) in the handoff.
 
 ### 5. Out of scope
 - Architecture or API-contract decisions — escalate to `architecture-engineer` rather than invent.

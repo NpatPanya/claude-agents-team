@@ -8,7 +8,6 @@
   },
   "keywords": ["agents", "engineering", "orchestration", "software-development", "code-review", "security", "qa"],
   "dependencies": [
-    { "name": "superpowers", "marketplace": "claude-plugins-official" },
     { "name": "frontend-design", "marketplace": "claude-plugins-official" }
   ]
 }

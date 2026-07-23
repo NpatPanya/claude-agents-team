@@ -7,7 +7,6 @@ tools: Read, Grep, Glob, Task, TodoWrite
 skills:
   - agt:agent-handoff-protocol
   - agt:engineering-flows-and-gates
-  - superpowers:dispatching-parallel-agents
 ---
 ## Project Manager — Skill Definition
 
