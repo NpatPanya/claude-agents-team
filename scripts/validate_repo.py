@@ -30,7 +30,6 @@ ALLOWED_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
 
 DISPLAY_NAMES = {
     "agent-handoff-protocol": "Agent Handoff Protocol",
-    "api-design": "API Design",
     "architecture-engineer": "Architecture Engineer",
     "backend-developer": "Backend Developer",
     "codebase-researcher": "Codebase Researcher",
@@ -43,14 +42,12 @@ DISPLAY_NAMES = {
     "root-cause-analyst": "Root Cause Analyst",
     "safe-refactor": "Safe Refactor",
     "security-analyst": "Security Analyst",
-    "system-design": "System Design",
     "tester": "Tester",
 }
 
 SHORT_DESCRIPTIONS = {
     "agent-handoff-protocol": "Structure agent dispatches, completions, blocks, and escalations.",
-    "api-design": "Define precise API contracts, errors, auth, and versioning.",
-    "architecture-engineer": "Turn approved designs into implementable technical specifications.",
+    "architecture-engineer": "Design system architecture, API contracts, and implementable technical specs.",
     "backend-developer": "Implement server-side code against approved specifications.",
     "codebase-researcher": "Trace existing code and assess the blast radius of changes.",
     "devops": "Handle CI/CD, infrastructure, deployment, and environment configuration.",
@@ -62,7 +59,6 @@ SHORT_DESCRIPTIONS = {
     "root-cause-analyst": "Investigate bugs and incidents to identify their actual root cause.",
     "safe-refactor": "Perform scoped, behavior-preserving mechanical refactors.",
     "security-analyst": "Threat-model and review authentication, input, secrets, and data exposure.",
-    "system-design": "Define high-level architecture, boundaries, data flow, and tradeoffs.",
     "tester": "Write and run automated tests, including relevant edge cases.",
 }
 
@@ -230,8 +226,7 @@ def validate_high_flow(errors: list[str]) -> None:
     required = (
         "research",
         "security-analyst (GATE-0 threat model)",
-        "system-design",
-        "architecture-engineer/api-design",
+        "architecture-engineer",
         "implementation",
         "tester",
         "QA",

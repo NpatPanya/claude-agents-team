@@ -1,4 +1,0 @@
-interface:
-  display_name: "API Design"
-  short_description: "Define precise API contracts, errors, auth, and versioning."
-  default_prompt: "Use $api-design to apply the API Design methodology to this task."

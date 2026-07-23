@@ -121,8 +121,7 @@ def delegation_policy(risk: str) -> dict[str, Any]:
 HIGH_FLOW = (
     "research",
     "security-analyst (GATE-0 threat model)",
-    "system-design",
-    "architecture-engineer/api-design",
+    "architecture-engineer",
     "implementation",
     "tester",
     "QA",

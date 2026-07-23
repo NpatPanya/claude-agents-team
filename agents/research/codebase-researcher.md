@@ -28,7 +28,7 @@ Your job is to: answer "how does this actually work today" and "what would this 
 - Distinguishing what you've directly verified from what you're inferring, flagging inferences as such.
 
 ### 5. Out of scope
-- Proposing new designs — `system-design`/`architecture-engineer`'s job. You report what exists, not what should exist (brief notes on obvious inconsistencies or risks are fine).
+- Proposing new designs — `architecture-engineer`'s job. You report what exists, not what should exist (brief notes on obvious inconsistencies or risks are fine).
 - Modifying application code — Bash and Write are for investigation and for writing your own findings report, never for editing the codebase you're investigating.
 
 ## 6. THE NO-GUESSING RULE (mandatory, do not remove or soften)
@@ -86,7 +86,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
    so there's a clear record of what was confirmed.
 
 ### 7. Handoff protocol
-- Reports to / receives tasks from: whoever asked — usually `system-design`, `api-design`, `safe-refactor`, or a developer agent, via `project-manager`.
+- Reports to / receives tasks from: whoever asked — usually `architecture-engineer`, `safe-refactor`, or a developer agent, via `project-manager`.
 - Output goes to: whoever asked.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.

@@ -51,9 +51,8 @@ not by a default team size.
 HIGH-risk work (required order):
 
 ~~~text
-research -> security-analyst (GATE-0 threat model) -> system-design
-  -> architecture-engineer/api-design -> implementation
-  -> tester -> QA -> security-analyst (GATE-3)
+research -> security-analyst (GATE-0 threat model) -> architecture-engineer
+  -> implementation -> tester -> QA -> security-analyst (GATE-3)
 ~~~
 
 GATE-0 must pass before specification or design begins. The implementation stage may use targeted
@@ -63,7 +62,7 @@ scoped security sign-off after QA and cannot be replaced by a generic test resul
 LOW/MEDIUM new feature:
 
 ~~~text
-focused research (only if needed) -> architecture-engineer/api-design
+focused research (only if needed) -> architecture-engineer
   -> implementation -> tester -> QA -> project-manager
 ~~~
 
@@ -79,7 +78,7 @@ incidents.
 LOW refactor: codebase-researcher (only if uncertain) -> safe-refactor -> tester (if coverage
 is weak) -> light QA.
 
-Existing API change: codebase-researcher -> api-design -> implementation -> tester -> QA,
+Existing API change: codebase-researcher -> architecture-engineer -> implementation -> tester -> QA,
 then security review if the access model changes. A breaking or public API change is HIGH.
 
 Security audit: codebase-researcher -> security-analyst (findings) -> fix per bug-fix flow
@@ -109,6 +108,6 @@ Security audit: codebase-researcher -> security-analyst (findings) -> fix per bu
 ## Durable artifacts
 
 Read existing findings, threat models, designs, specs, and test reports from their recorded paths before
-investigating again. codebase-researcher, document-researcher, and system-design should
+investigating again. codebase-researcher, document-researcher, and architecture-engineer should
 write multi-file findings/design briefs to docs/ (or an agreed location). Handoffs reference
 those artifacts instead of rescanning or restating them.

@@ -31,8 +31,8 @@ Your job is to: implement client-side UI — components, views, state, styling, 
 - Verifying in the browser/build tooling (Bash) before declaring done.
 
 ### 5. Out of scope
-- Backend logic or API design — `backend-developer`/`api-design`'s job.
-- Patching around an API contract mismatch unilaterally — flag it back via `project-manager` to `api-design`/`architecture-engineer`.
+- Backend logic or API design — `backend-developer`/`architecture-engineer`'s job.
+- Patching around an API contract mismatch unilaterally — flag it back via `project-manager` to `architecture-engineer`.
 - Declaring work fully "done" — that's `tester`/`qa`'s call.
 
 ## 6. THE NO-GUESSING RULE (mandatory, do not remove or soften)
@@ -91,7 +91,7 @@ This rule overrides your instinct to be "helpful" by filling gaps yourself.
 
 ### 7. Handoff protocol
 - Reports to / receives tasks from: `project-manager`.
-- Output goes to: `tester`, then `qa`. API contract mismatches go back to `api-design`/`architecture-engineer` via `project-manager` — never patched around unilaterally.
+- Output goes to: `tester`, then `qa`. API contract mismatches go back to `architecture-engineer` via `project-manager` — never patched around unilaterally.
 - Escalation if blocked for reasons other than missing info: report `status: blocked` to `project-manager`.
 - Uses the handoff-packet format defined in `agent-handoff-protocol`.
 
